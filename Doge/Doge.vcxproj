@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{12C9291B-48A8-479E-8171-96EDE828993F}</ProjectGuid>
+    <RootNamespace>LUL</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Doge\Dependencies\GLFW\include;$(SolutionDir)Doge\Dependencies\glew-2.1.0\include;$(SolutionDir)Doge\vendor;$(SolutionDir)Doge\Dependencies\assimp\include;$(SolutionDir)Doge\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Doge\Dependencies\GLFW\lib-vc2015;$(SolutionDir)Doge\Dependencies\glew-2.1.0\lib\Release\Win32;$(SolutionDir)Doge\Dependencies\assimp\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;assimp-vc141-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Doge\Dependencies\GLFW\include;$(SolutionDir)Doge\Dependencies\glew-2.1.0\include;$(SolutionDir)Doge\vendor;$(SolutionDir)Doge\Dependencies\assimp\include;$(SolutionDir)Doge\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Doge\Dependencies\GLFW\lib-vc2015;$(SolutionDir)Doge\Dependencies\glew-2.1.0\lib\Release\Win32;$(SolutionDir)Doge\Dependencies\assimp\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;assimp-vc141-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Doge\Dependencies\GLFW\include;$(SolutionDir)Doge\Dependencies\glew-2.1.0\include;$(SolutionDir)Doge\vendor;$(SolutionDir)Doge\Dependencies\assimp\include;$(SolutionDir)Doge\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Doge\Dependencies\GLFW\lib-vc2015;$(SolutionDir)Doge\Dependencies\glew-2.1.0\lib\Release\Win32;$(SolutionDir)Doge\Dependencies\assimp\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;assimp-vc141-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Doge\Dependencies\GLFW\include;$(SolutionDir)Doge\Dependencies\glew-2.1.0\include;$(SolutionDir)Doge\vendor;$(SolutionDir)Doge\Dependencies\assimp\include;$(SolutionDir)Doge\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Doge\Dependencies\GLFW\lib-vc2015;$(SolutionDir)Doge\Dependencies\glew-2.1.0\lib\Release\Win32;$(SolutionDir)Doge\Dependencies\assimp\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;assimp-vc141-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Doge\_Doge.cpp" />
+    <ClCompile Include="lib\Camera.cpp" />
+    <ClCompile Include="lib\Engine.cpp" />
+    <ClCompile Include="lib\IndexBuffer.cpp" />
+    <ClCompile Include="lib\Material.cpp" />
+    <ClCompile Include="lib\Renderable.cpp" />
+    <ClCompile Include="lib\Renderables\Triangles.cpp" />
+    <ClCompile Include="lib\Renderer.cpp" />
+    <ClCompile Include="lib\Shader.cpp" />
+    <ClCompile Include="lib\Texture.cpp" />
+    <ClCompile Include="lib\VertexArray.cpp" />
+    <ClCompile Include="lib\VertexBuffer.cpp" />
+    <ClCompile Include="lib\Window.cpp" />
+    <ClCompile Include="vendor\imgui\imgui.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="vendor\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="vendor\stb\stb_image.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\frag\Test.frag" />
+    <None Include="res\shaders\vert\Test.vert" />
+    <None Include="src\3.2.1.point_shadows.vert" />
+    <None Include="src\3.2.1.point_shadows_depth.frag" />
+    <None Include="src\3.2.1.point_shadows_depth.geom" />
+    <None Include="src\3.2.1.point_shadows_depth.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lib\Camera.h" />
+    <ClInclude Include="lib\Core.h" />
+    <ClInclude Include="lib\Engine.h" />
+    <ClInclude Include="lib\IndexBuffer.h" />
+    <ClInclude Include="lib\Material.h" />
+    <ClInclude Include="lib\Renderable.h" />
+    <ClInclude Include="lib\Renderables\Triangles.h" />
+    <ClInclude Include="lib\Renderer.h" />
+    <ClInclude Include="lib\Shader.h" />
+    <ClInclude Include="lib\Texture.h" />
+    <ClInclude Include="lib\VertexArray.h" />
+    <ClInclude Include="lib\VertexBuffer.h" />
+    <ClInclude Include="lib\VertexBufferLayout.h" />
+    <ClInclude Include="lib\Window.h" />
+    <ClInclude Include="vendor\imgui\imconfig.h" />
+    <ClInclude Include="vendor\imgui\imgui.h" />
+    <ClInclude Include="vendor\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="vendor\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="vendor\imgui\imgui_internal.h" />
+    <ClInclude Include="vendor\imgui\imstb_rectpack.h" />
+    <ClInclude Include="vendor\imgui\imstb_textedit.h" />
+    <ClInclude Include="vendor\imgui\imstb_truetype.h" />
+    <ClInclude Include="vendor\spdlog\async.h" />
+    <ClInclude Include="vendor\spdlog\async_logger-inl.h" />
+    <ClInclude Include="vendor\spdlog\async_logger.h" />
+    <ClInclude Include="vendor\spdlog\cfg\argv.h" />
+    <ClInclude Include="vendor\spdlog\cfg\env.h" />
+    <ClInclude Include="vendor\spdlog\cfg\helpers-inl.h" />
+    <ClInclude Include="vendor\spdlog\cfg\helpers.h" />
+    <ClInclude Include="vendor\spdlog\common-inl.h" />
+    <ClInclude Include="vendor\spdlog\common.h" />
+    <ClInclude Include="vendor\spdlog\details\backtracer-inl.h" />
+    <ClInclude Include="vendor\spdlog\details\backtracer.h" />
+    <ClInclude Include="vendor\spdlog\details\circular_q.h" />
+    <ClInclude Include="vendor\spdlog\details\console_globals.h" />
+    <ClInclude Include="vendor\spdlog\details\file_helper-inl.h" />
+    <ClInclude Include="vendor\spdlog\details\file_helper.h" />
+    <ClInclude Include="vendor\spdlog\details\fmt_helper.h" />
+    <ClInclude Include="vendor\spdlog\details\log_msg-inl.h" />
+    <ClInclude Include="vendor\spdlog\details\log_msg.h" />
+    <ClInclude Include="vendor\spdlog\details\log_msg_buffer-inl.h" />
+    <ClInclude Include="vendor\spdlog\details\log_msg_buffer.h" />
+    <ClInclude Include="vendor\spdlog\details\mpmc_blocking_q.h" />
+    <ClInclude Include="vendor\spdlog\details\null_mutex.h" />
+    <ClInclude Include="vendor\spdlog\details\os-inl.h" />
+    <ClInclude Include="vendor\spdlog\details\os.h" />
+    <ClInclude Include="vendor\spdlog\details\periodic_worker-inl.h" />
+    <ClInclude Include="vendor\spdlog\details\periodic_worker.h" />
+    <ClInclude Include="vendor\spdlog\details\registry-inl.h" />
+    <ClInclude Include="vendor\spdlog\details\registry.h" />
+    <ClInclude Include="vendor\spdlog\details\synchronous_factory.h" />
+    <ClInclude Include="vendor\spdlog\details\tcp_client-windows.h" />
+    <ClInclude Include="vendor\spdlog\details\tcp_client.h" />
+    <ClInclude Include="vendor\spdlog\details\thread_pool-inl.h" />
+    <ClInclude Include="vendor\spdlog\details\thread_pool.h" />
+    <ClInclude Include="vendor\spdlog\details\udp_client-windows.h" />
+    <ClInclude Include="vendor\spdlog\details\udp_client.h" />
+    <ClInclude Include="vendor\spdlog\details\windows_include.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bin_to_hex.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\args.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\chrono.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\color.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\compile.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\core.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\format-inl.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\format.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\locale.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\os.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\ostream.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\printf.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\ranges.h" />
+    <ClInclude Include="vendor\spdlog\fmt\bundled\xchar.h" />
+    <ClInclude Include="vendor\spdlog\fmt\chrono.h" />
+    <ClInclude Include="vendor\spdlog\fmt\compile.h" />
+    <ClInclude Include="vendor\spdlog\fmt\fmt.h" />
+    <ClInclude Include="vendor\spdlog\fmt\ostr.h" />
+    <ClInclude Include="vendor\spdlog\fmt\xchar.h" />
+    <ClInclude Include="vendor\spdlog\formatter.h" />
+    <ClInclude Include="vendor\spdlog\fwd.h" />
+    <ClInclude Include="vendor\spdlog\logger-inl.h" />
+    <ClInclude Include="vendor\spdlog\logger.h" />
+    <ClInclude Include="vendor\spdlog\pattern_formatter-inl.h" />
+    <ClInclude Include="vendor\spdlog\pattern_formatter.h" />
+    <ClInclude Include="vendor\spdlog\sinks\android_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\ansicolor_sink-inl.h" />
+    <ClInclude Include="vendor\spdlog\sinks\ansicolor_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\base_sink-inl.h" />
+    <ClInclude Include="vendor\spdlog\sinks\base_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\basic_file_sink-inl.h" />
+    <ClInclude Include="vendor\spdlog\sinks\basic_file_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\daily_file_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\dist_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\dup_filter_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\hourly_file_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\mongo_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\msvc_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\null_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\ostream_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\qt_sinks.h" />
+    <ClInclude Include="vendor\spdlog\sinks\ringbuffer_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\rotating_file_sink-inl.h" />
+    <ClInclude Include="vendor\spdlog\sinks\rotating_file_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\sink-inl.h" />
+    <ClInclude Include="vendor\spdlog\sinks\sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\stdout_color_sinks-inl.h" />
+    <ClInclude Include="vendor\spdlog\sinks\stdout_color_sinks.h" />
+    <ClInclude Include="vendor\spdlog\sinks\stdout_sinks-inl.h" />
+    <ClInclude Include="vendor\spdlog\sinks\stdout_sinks.h" />
+    <ClInclude Include="vendor\spdlog\sinks\syslog_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\systemd_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\tcp_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\udp_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\wincolor_sink-inl.h" />
+    <ClInclude Include="vendor\spdlog\sinks\wincolor_sink.h" />
+    <ClInclude Include="vendor\spdlog\sinks\win_eventlog_sink.h" />
+    <ClInclude Include="vendor\spdlog\spdlog-inl.h" />
+    <ClInclude Include="vendor\spdlog\spdlog.h" />
+    <ClInclude Include="vendor\spdlog\stopwatch.h" />
+    <ClInclude Include="vendor\spdlog\tweakme.h" />
+    <ClInclude Include="vendor\spdlog\version.h" />
+    <ClInclude Include="vendor\stb\stb_image.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Cubemaps\skybox\back.jpg" />
+    <Image Include="res\Cubemaps\skybox\bottom.jpg" />
+    <Image Include="res\Cubemaps\skybox\front.jpg" />
+    <Image Include="res\Cubemaps\skybox\left.jpg" />
+    <Image Include="res\Cubemaps\skybox\right.jpg" />
+    <Image Include="res\Cubemaps\skybox\top.jpg" />
+    <Image Include="res\textures\awesomeface.png" />
+    <Image Include="res\textures\blending_transparent_window.png" />
+    <Image Include="res\textures\bricks2.jpg" />
+    <Image Include="res\textures\bricks2_disp.jpg" />
+    <Image Include="res\textures\bricks2_normal.jpg" />
+    <Image Include="res\textures\brickwall.jpg" />
+    <Image Include="res\textures\brickwall_normal.jpg" />
+    <Image Include="res\textures\castle_gate_diff.png" />
+    <Image Include="res\textures\castle_gate_disp.png" />
+    <Image Include="res\textures\castle_gate_disp_2.png" />
+    <Image Include="res\textures\castle_gate_normal.png" />
+    <Image Include="res\textures\container.jpg" />
+    <Image Include="res\textures\container2.png" />
+    <Image Include="res\textures\container2_specular.png" />
+    <Image Include="res\textures\doge.jpg" />
+    <Image Include="res\textures\fabric_pattern_07_ao_2k.png" />
+    <Image Include="res\textures\fabric_pattern_07_col_03_2k.png" />
+    <Image Include="res\textures\fabric_pattern_07_col_1_2k.png" />
+    <Image Include="res\textures\fabric_pattern_07_col_2_2k.png" />
+    <Image Include="res\textures\fabric_pattern_07_nor_2k.png" />
+    <Image Include="res\textures\fabric_pattern_07_rough_2k.png" />
+    <Image Include="res\textures\grass.png" />
+    <Image Include="res\textures\marble.jpg" />
+    <Image Include="res\textures\metal.png" />
+    <Image Include="res\textures\toy_box_disp.png" />
+    <Image Include="res\textures\toy_box_normal.png" />
+    <Image Include="res\textures\wall.jpg" />
+    <Image Include="res\textures\wood.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
