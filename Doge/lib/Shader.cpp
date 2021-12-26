@@ -37,6 +37,11 @@ namespace doge
 		GLCALL(glUniform1i(loc, value));
 	}
 
+	void Shader::SetUniformTexture(const std::string& name, int value) const
+	{
+		SetUniform1i(name, value);
+	}
+
 	void Shader::SetUniform1f(const std::string & name, float value) const
 	{
 		Bind();

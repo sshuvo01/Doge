@@ -30,15 +30,13 @@ namespace doge
 			auto& elm = elements[i];
 		
 			GLCALL( glEnableVertexAttribArray(i) );
-			GLCALL( glVertexAttribPointer(i, elm.count, elm.type, elm.normalized, 
-				vbl.GetStride(), (const void*) elm.offset) );
+			GLCALL( glVertexAttribPointer(i, elm.count, elm.type, elm.normalized, vbl.GetStride(), (const void*) elm.offset) );
 		}
 
 		spdlog::debug("Added buffer. VAO ID: {}, No. of Attributes {}", m_RendererID, elements.size());
 	}
 
-	void VertexArray::AddInstanceBuffer(const VertexBuffer& vb, DataType type, unsigned int index,
-		unsigned int divisor)
+	void VertexArray::AddInstanceBuffer(const VertexBuffer& vb, DataType type, unsigned int index, unsigned int divisor)
 	{
 		/*separate buffer for instance array*/
 		/*all floats*/
@@ -50,8 +48,7 @@ namespace doge
 		if (count <= 4)
 		{
 			GLCALL(glEnableVertexAttribArray(index));
-			GLCALL(glVertexAttribPointer(index, count, GL_FLOAT, GL_FALSE, 
-				count * sizeof(float), (void*)0));
+			GLCALL(glVertexAttribPointer(index, count, GL_FLOAT, GL_FALSE, count * sizeof(float), (void*)0));
 			GLCALL(glVertexAttribDivisor(index, divisor));
 		}
 		else
@@ -65,8 +62,7 @@ namespace doge
 			for (int i = 0; i < vecElementCount; i++)
 			{
 				GLCALL(glEnableVertexAttribArray(index+i));
-				GLCALL(glVertexAttribPointer(index+i, vecElementCount, GL_FLOAT, GL_FALSE, 
-					vecElementCount * vecSize, (void*)(i*vecSize)));
+				GLCALL(glVertexAttribPointer(index+i, vecElementCount, GL_FLOAT, GL_FALSE, vecElementCount * vecSize, (void*)(i*vecSize)));
 				GLCALL(glVertexAttribDivisor(index+i, divisor));
 			}
 		} // end of else
@@ -75,7 +71,7 @@ namespace doge
 	void VertexArray::Bind() const
 	{
 		GLCALL(glBindVertexArray(m_RendererID));
-		spdlog::debug("Bound VAO. VAO ID: {}", m_RendererID);
+		//spdlog::debug("Bound VAO. VAO ID: {}", m_RendererID);
 	}
 
 	void VertexArray::Unbind() const

@@ -32,7 +32,6 @@ namespace doge
 		void Bind() const;
 		void Unbind() const;
 	private:
-		unsigned int    m_stride;
 		unsigned int    m_RendererID;
 	};
 

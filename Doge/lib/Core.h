@@ -10,6 +10,8 @@ typedef unsigned int uint;
 #define NOCOPY(x) x(const x&)=delete;x(const x&&)=delete
 #define NOASSIGN(x) x& operator=(const x&)=delete;x& operator=(const x&&)=delete
 #define NOCOPYNOASSIGN(x) NOCOPY(x);NOASSIGN(x)
+#define DELETE(x) if(x)delete x;x=nullptr
+#define DELETEARRAY(x) if(x)delete[] x;x=nullptr
 
 
 namespace doge

@@ -75,6 +75,12 @@
     <ClCompile Include="lib\Renderables\Triangles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\Framebuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\3.2.1.point_shadows.vert" />
@@ -446,6 +452,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\Renderables\Triangles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\Framebuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\Lights.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

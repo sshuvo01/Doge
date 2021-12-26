@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "Renderer.h"
 #include "Renderables/Triangles.h"
+#include "Engine.h"
 
 unsigned int width = 640 * 2;
 unsigned int height = 480 * 2;
@@ -127,8 +128,36 @@ private:
 	int m_X;
 };
 
-int mainTest()
+void f(int a = 2)
 {
+	std::cout << "alal " << a << std::endl;
+}
+
+int main()
+{
+	spdlog::set_level(spdlog::level::debug);
+	doge::EngineSpec es;
+	es.camera = &camera;
+	doge::Engine::GetInstance().InitEngine(es);
+
+	// renderer
+	doge::Renderer rnder;
+	doge::Triangles tri;
+	doge::Scene theScene;
+	theScene.renderablesList.push_back(&tri);
+
+	//rnder.m_Renderables.push_back(&tri);
+	es.renderer = &rnder;
+	doge::Engine::GetInstance().SetRenderer(&rnder);
+	doge::Engine::GetInstance().SetScene(&theScene);
+	doge::Engine::GetInstance().Run();
+
+	std::cin.get();
+	//doge::Engine::Init(23);
+	//func();
+
+	std::cin.get();
+
 	std::shared_ptr<Test> st, st3;
 	st = std::make_shared<Test>(1);
 	{
@@ -228,7 +257,7 @@ int main2()
 }
 
 
-int main()
+int mainmain()
 {
 	spdlog::set_level(spdlog::level::debug);
 	// 

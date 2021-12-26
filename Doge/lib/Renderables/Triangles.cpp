@@ -13,23 +13,33 @@ namespace doge
 			0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f  // top   
 		};
 
-		m_VB = std::make_shared<VertexBuffer>(vertices, sizeof(float) * (3 + 3 + 2) * 3 );
-		m_VBL = std::make_shared<VertexBufferLayout>();
-		m_VBL->Push(3);
-		m_VBL->Push(3);
-		m_VBL->Push(2);
-		m_VAO = std::make_shared<VertexArray>();
-		m_VAO->AddBuffer(*m_VB, *m_VBL);
-		m_IB = std::make_shared<IndexBuffer>(3);
-
+		uint layout[] = { 3, 3, 2 };
+		RenderableData rData;
+		rData.buffer = vertices;
+		rData.bufferSize = sizeof(float) * (3 + 3 + 2) * 3;
+		rData.indexCount = 3;
+		rData.layout = layout;
+		rData.layoutCount = 3;
+		
+		std::vector<glm::mat4> modelMats;
 		glm::mat4 m{ 1.0f };
-		m_ModelMats.push_back(m);
+		modelMats.push_back(m);
 		m = glm::translate(m, glm::vec3(1.0f, 1.0f, 0.0f));
-		m_ModelMats.push_back(m);
+		modelMats.push_back(m);
+		m = glm::translate(m, glm::vec3(-3.0f, 0.0f, 1.0f));
+		modelMats.push_back(m);
+		m = glm::translate(m, glm::vec3(0.0f, -2.0f, 1.0f));
+		modelMats.push_back(m);
+		
+		AddData(rData, modelMats);
 
-		m_Material = std::make_shared<Material>();
-		m_Material->m_DiffuseMap = std::make_shared<Texture>("res/textures/doge.jpg", true);
-		m_Material->m_Shader = std::make_shared<Shader>("res/shaders/vert/Test.vert", "res/shaders/frag/Test.frag");
+
+		auto material = std::make_shared<Material>();
+		//material->sm_DiffuseMap = std::make_shared<Texture>("res/textures/doge.jpg", true);
+		material->SetDiffuseMap(std::make_shared<Texture>("res/textures/doge.jpg", true));
+		material->SetShader(std::make_shared<Shader>("res/shaders/vert/Test.vert", "res/shaders/frag/Test.frag"));
+		SetMaterial(material);
+		//m_Material->m_Shader = std::make_shared<Shader>("res/shaders/vert/Test.vert", "res/shaders/frag/Test.frag");
 	}
 
 	Triangles::~Triangles()
