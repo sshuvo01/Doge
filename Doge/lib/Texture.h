@@ -10,8 +10,8 @@ namespace doge
 	{
 	public:
 		NOCOPYNOASSIGN(Texture);
-		Texture(const std::string& path, bool flipUV = false, bool gamma = false, GLenum repeatMode = GL_REPEAT);
 		Texture() = delete;
+		Texture(const std::string& path, bool flipUV = false, bool gamma = false, GLenum repeatMode = GL_REPEAT);
 		~Texture();
 
 		void Bind(unsigned int slot = 0) const;

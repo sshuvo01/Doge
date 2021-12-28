@@ -4,37 +4,32 @@
 
 namespace doge
 {
-	struct FramebufferSettings
+	struct FramebufferSpec
 	{
+		uint width = 640 * 2;
+		uint height = 480 * 2;
+		uint colorBufferCount = 1;
 		GLenum texRepeatMode = GL_REPEAT;
 		GLenum texFilteringMode = GL_LINEAR;
+		bool isHDR = true;
 	};
 
 	class Framebuffer
 	{
 	public:
 		NOCOPYNOASSIGN(Framebuffer);
-		Framebuffer
-		(
-			unsigned int width, unsigned int height,
-			FramebufferSettings settings = FramebufferSettings(),
-			unsigned int colorbufferCountbool = 1,
-			bool isHDR = true
-		);
+		Framebuffer() = delete;
+		Framebuffer (const FramebufferSpec& spec);
 		~Framebuffer();
 		
 		void BindFramebuffer() const;
 		void UnbindFramebuffer() const;
-		void BindTexture(unsigned int slot = 0, unsigned int colorbufferIndex = 0) const;
+		void BindTexture(uint slot = 0, uint colorbufferIndex = 0) const;
 	private:
-		unsigned int            m_Width;
-		unsigned int            m_Height;
-		bool                    m_IsHDR;
-		FramebufferSettings     m_Settings;
-		unsigned int            m_FramebufferID;
-		unsigned int            m_RenderbufferID;
-		unsigned int*           m_ColorbuffersID = nullptr;
-		unsigned int            m_ColorbuffesCount;
+		FramebufferSpec       m_Spec;
+		uint                  m_FramebufferID;
+		uint                  m_RenderbufferID;
+		uint*                 m_ColorbuffersID = nullptr;
 	};
 
 }

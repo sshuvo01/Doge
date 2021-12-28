@@ -10,8 +10,8 @@ namespace doge
 		std::string modelMatName = "u_Model";
 		std::string viewMatName = "u_View";
 		std::string projectionMatName = "u_Projection";
-		std::string mvpMatName = "u_MVP"; // model, view, projection
-		std::string vpMatName = "u_VP"; // view and projection
+		std::string mvpMatName = "u_MVP"; // model * view * projection
+		std::string vpMatName = "u_VP"; // view * projection
 		std::string diffuseMapName = "u_DiffuseMap";
 		uint positionLoc = 0;
 		uint texCoordLoc = 1;

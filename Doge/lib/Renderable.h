@@ -38,11 +38,11 @@ namespace doge
 
 		void BindData() const;
 		inline const std::shared_ptr<Material>& GetMaterial() const { return m_Material; }
-		inline void SetMaterial(const std::shared_ptr<Material>& material) { m_Material = material; }
+		//inline void SetMaterial(const std::shared_ptr<Material>& material) { m_Material = material; }
 		inline uint GetModelMatsSize() const { return m_ModelMats.size(); }
 		inline uint GetIndexCount() const { return m_IB->GetCount(); }
 	protected:
-		void AddData(const RenderableData& rData, const std::vector<glm::mat4>& modelMats);
+		void AddData(const RenderableData& rData, const std::vector<glm::mat4>& modelMats, const std::shared_ptr<Material>& mat);
 	private:
 		std::vector<glm::mat4>              m_ModelMats; // for multiple instances
 		RenderableType                      m_Type;

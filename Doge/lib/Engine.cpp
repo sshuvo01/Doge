@@ -45,15 +45,14 @@ namespace doge
 			CalculateDeltaTime();
 			ProcessInput(m_Window);
 			//
-
-			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
-
+			
+			glm::vec3 campos = m_Spec.camera->Position;
 			glm::mat4 projection = glm::perspective(glm::radians(m_Spec.camera->Zoom), (float)m_Spec.screenWidth / (float)m_Spec.screenHeight, 0.1f, 100.0f);
 			//m_Spec.renderer->RenderThemAll(m_Spec.camera->GetViewMatrix(), projection);
 			m_Spec.renderer->SetProjectionMat(projection);
 			m_Spec.renderer->SetViewMat(m_Spec.camera->GetViewMatrix());
-			m_Spec.renderer->RenderThemAll();
+			m_Spec.renderer->SetCameraPosition(campos);
+			m_Spec.renderer->RenderFrame();
 
 			//
 			glfwSwapBuffers(m_Window);

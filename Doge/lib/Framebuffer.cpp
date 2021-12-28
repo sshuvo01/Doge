@@ -4,15 +4,8 @@
 
 namespace doge
 {
-
-	Framebuffer::Framebuffer
-	(
-		unsigned int width, unsigned int height,
-		FramebufferSettings settings,
-		unsigned int colorbufferCount, bool isHDR
-	)
-		: m_ColorbuffesCount(colorbufferCount), m_Width(width), m_Height(height),
-		m_Settings(settings), m_IsHDR(isHDR)
+	Framebuffer::Framebuffer(const FramebufferSpec& spec)
+		: m_Spec(spec)
 	{
 		spdlog::debug("Constructing framebuffer");
 
@@ -20,32 +13,32 @@ namespace doge
 		GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, m_FramebufferID));
 
 		//color attachment texture
-		m_ColorbuffersID = new unsigned int[m_ColorbuffesCount];
-		GLCALL(glGenTextures(m_ColorbuffesCount, m_ColorbuffersID));
-		GLenum internalFormat = m_IsHDR ? GL_RGBA16F : GL_RGBA;
+		m_ColorbuffersID = new uint[m_Spec.colorBufferCount];
+		GLCALL(glGenTextures(m_Spec.colorBufferCount, m_ColorbuffersID));
+		GLenum internalFormat = m_Spec.isHDR ? GL_RGBA16F : GL_RGBA;
 
-		for (unsigned int i = 0; i < m_ColorbuffesCount; i++)
+		for (uint i = 0; i < m_Spec.colorBufferCount; i++)
 		{
 			GLCALL(glBindTexture(GL_TEXTURE_2D, m_ColorbuffersID[i]));
-			GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, GL_RGBA, GL_FLOAT, NULL));
-			GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (GLint)m_Settings.texFilteringMode));
-			GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (GLint)m_Settings.texFilteringMode));
-			GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, (GLint)m_Settings.texRepeatMode));
-			GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, (GLint)m_Settings.texRepeatMode));
+			GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Spec.width, m_Spec.height, 0, GL_RGBA, GL_FLOAT, NULL));
+			GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (GLint)m_Spec.texFilteringMode));
+			GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (GLint)m_Spec.texFilteringMode));
+			GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, (GLint)m_Spec.texRepeatMode));
+			GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, (GLint)m_Spec.texRepeatMode));
 			GLCALL(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_ColorbuffersID[i], 0));
 		} // end of for
 
 		GLCALL(glGenRenderbuffers(1, &m_RenderbufferID));
 		GLCALL(glBindRenderbuffer(GL_RENDERBUFFER, m_RenderbufferID));
-		GLCALL(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_Width, m_Height));
+		GLCALL(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, m_Spec.width, m_Spec.height));
 		GLCALL(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_RenderbufferID));
 
-		std::vector<unsigned int> attachments;
-		for (unsigned int i = 0; i < m_ColorbuffesCount; i++)
+		std::vector<uint> attachments;
+		for (uint i = 0; i < m_Spec.colorBufferCount; i++)
 		{
 			attachments.push_back(GL_COLOR_ATTACHMENT0 + i);
 		}
-		GLCALL(glDrawBuffers(m_ColorbuffesCount, (const GLenum*)&attachments[0]));
+		GLCALL(glDrawBuffers(m_Spec.colorBufferCount, (const GLenum*)&attachments[0]));
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		{
@@ -63,7 +56,7 @@ namespace doge
 	{
 		GLCALL(glDeleteFramebuffers(1, &m_FramebufferID));
 		GLCALL(glDeleteRenderbuffers(1, &m_RenderbufferID));
-		GLCALL(glDeleteTextures(m_ColorbuffesCount, m_ColorbuffersID));
+		GLCALL(glDeleteTextures(m_Spec.colorBufferCount, m_ColorbuffersID));
 
 		DELETEARRAY(m_ColorbuffersID);
 	}
@@ -78,10 +71,18 @@ namespace doge
 		GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 	}
 
-	void Framebuffer::BindTexture(unsigned int slot, unsigned int colorbufferIndex) const
+	void Framebuffer::BindTexture(uint slot, uint colorbufferIndex) const
 	{
-		GLCALL(glActiveTexture(GL_TEXTURE0 + slot));
-		GLCALL(glBindTexture(GL_TEXTURE_2D, m_ColorbuffersID[colorbufferIndex]));
+		if (colorbufferIndex < m_Spec.colorBufferCount)
+		{
+			GLCALL(glActiveTexture(GL_TEXTURE0 + slot));
+			GLCALL(glBindTexture(GL_TEXTURE_2D, m_ColorbuffersID[colorbufferIndex]));
+		}
+		else
+		{
+			spdlog::error("Color Buffer Index {} is out of bound", colorbufferIndex);
+			ASSERT(false);
+		}
 	}
 
 

@@ -10,6 +10,10 @@ namespace doge
 		
 		//m_ProjectionMat = 
 		LoadScreenRectData();
+		FramebufferSpec fSpec;
+		fSpec.isHDR = false;
+		m_FBuffer1 = new Framebuffer{fSpec};
+		m_ScreenRectShader = new Shader{ "res/shaders/vert/ScreenRect.vert", "res/shaders/frag/ScreenRect.frag" };
 	}
 	
 	Renderer::~Renderer()
@@ -17,50 +21,19 @@ namespace doge
 		DELETE(m_ScreenRectVAO);
 		DELETE(m_ScreenRectVB);
 		DELETE(m_ScreenRectVBL);
+		DELETE(m_FBuffer1);
+		DELETE(m_ScreenRectShader);
 	}
 
-	void Renderer::RenderThemAll(const glm::mat4& view, const glm::mat4& proj)
+	void Renderer::RenderFrame() const
 	{
 		for (size_t i = 0; i < m_Scene->renderablesList.size(); i++)
 		{
-			const Renderable* rable = m_Scene->renderablesList[i];
-			rable->BindData();
-
-		}
-
-		for (size_t i = 0; i < m_Renderables.size(); i++)
-		{
-			m_Renderables[i]->BindData();
-			//m_Renderables[i]->m_Material->m_Shader->SetUniformMatrix4f("")
-			m_Renderables[i]->GetMaterial()->SetMaterialUniforms();
-			//m_Renderables[i]->m_Material->SetMaterialUniforms();
-			m_Renderables[i]->GetMaterial()->GetShader()->SetUniformMatrix4f("u_View", view);
-			m_Renderables[i]->GetMaterial()->GetShader()->SetUniformMatrix4f("u_Projection", proj);
-			//m_Renderables[i]->m_Material->m_Shader->SetUniformMatrix4f("u_View", view);
-			//m_Renderables[i]->m_Material->m_Shader->SetUniformMatrix4f("u_Projection", proj);
-			glm::mat4 vp = proj * view;
-			/*
-
-			for (size_t j = 0; j < m_Renderables[i]->m_ModelMats.size(); j++)
-			{
-				m_Renderables[i]->m_Material->m_Shader->SetUniformMatrix4f("u_Model", m_Renderables[i]->m_ModelMats[j]);
-				glm::mat4 mvp = vp * m_Renderables[i]->m_ModelMats[j];
-				m_Renderables[i]->m_Material->m_Shader->SetUniformMatrix4f("u_MVP", mvp);
-
-				GLCALL(glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, NULL));
-			}
-			*/
-			glDrawElementsInstanced(GL_TRIANGLES, m_Renderables[i]->GetIndexCount(), 
-				GL_UNSIGNED_INT, NULL, m_Renderables[i]->GetModelMatsSize());
-
-		}
-
-	}
-
-	void Renderer::RenderThemAll() const
-	{
-		for (size_t i = 0; i < m_Scene->renderablesList.size(); i++)
-		{
+			m_FBuffer1->BindFramebuffer();
+			
+			SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
+			ClearBuffer(true, true);
+			EnableDepthTest(true);
 			const Renderable* rable = m_Scene->renderablesList[i];
 			rable->BindData();
 			rable->GetMaterial()->SetMaterialUniforms();
@@ -69,6 +42,14 @@ namespace doge
 			
 			glDrawElementsInstanced(GL_TRIANGLES, rable->GetIndexCount(),
 				GL_UNSIGNED_INT, NULL, rable->GetModelMatsSize());
+			m_FBuffer1->UnbindFramebuffer();
+			//
+			m_ScreenRectVAO->Bind();
+			m_ScreenRectShader->Bind();
+			m_FBuffer1->BindTexture();
+			m_ScreenRectShader->SetUniformTexture("screenRectTexture", 0);
+			EnableDepthTest(false);
+			glDrawArrays(GL_TRIANGLES, 0, 6);
 		}
 	}
 
@@ -92,6 +73,74 @@ namespace doge
 		m_ScreenRectVBL->Push(2);
 		m_ScreenRectVAO = new VertexArray;
 		m_ScreenRectVAO->AddBuffer(*m_ScreenRectVB, *m_ScreenRectVBL);
-		spdlog::debug("Loaded screen rect.");// no index buffer
+		spdlog::debug("Loaded screen rect vertices");// no index buffer
 	}
+
+	void Renderer::ClearBuffer(bool color, bool depth, bool stencil, bool accum) const
+	{
+		GLbitfield mask = 0;
+
+		if (color)
+		{
+			mask = mask | GL_COLOR_BUFFER_BIT;
+		}
+		if (depth)
+		{
+			mask = mask | GL_DEPTH_BUFFER_BIT;
+		}
+		if (stencil)
+		{
+			mask = mask | GL_STENCIL_BUFFER_BIT;
+		}
+		if (accum)
+		{
+			mask = mask | GL_ACCUM_BUFFER_BIT;
+		}
+
+		if (mask != 0) GLCALL(glClear(mask));
+	}
+
+	void Renderer::SetClearColor(const glm::vec4 & color) const
+	{
+		glClearColor(color.r, color.g, color.b, color.a);
+	}
+
+	void Renderer::EnableDepthTest(bool state) const
+	{
+		if (state)
+		{
+			GLCALL(glEnable(GL_DEPTH_TEST));
+		}
+		else
+		{
+			GLCALL(glDisable(GL_DEPTH_TEST));
+		}
+	}
+
+	void Renderer::EnableStencilTest(bool state) const
+	{
+		if (state)
+		{
+			GLCALL(glEnable(GL_STENCIL_TEST));
+		}
+		else
+		{
+			GLCALL(glDisable(GL_STENCIL_TEST));
+		}
+	}
+
+	void Renderer::EnableDepthWriting(bool state) const
+	{
+		if (state)
+		{
+			GLCALL(glDepthMask(GL_TRUE));
+		}
+		else
+		{
+			GLCALL(glDepthMask(GL_FALSE));
+		}
+	}
+
+
+
 }

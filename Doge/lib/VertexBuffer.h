@@ -7,17 +7,11 @@ namespace doge
 	class VertexBuffer
 	{
 	public:
+		NOCOPYNOASSIGN(VertexBuffer);
 		VertexBuffer(const void* data, unsigned int size);
 		~VertexBuffer();
 		VertexBuffer() = delete;
 
-		/*
-		VertexBuffer(const VertexBuffer&) = delete;
-		VertexBuffer(const VertexBuffer&&) = delete;
-		VertexBuffer& operator=(const VertexBuffer&) = delete;
-		VertexBuffer& operator=(const VertexBuffer&&) = delete;
-		*/
-		NOCOPYNOASSIGN(VertexBuffer);
 
 		void Bind() const;
 		void Unbind() const;

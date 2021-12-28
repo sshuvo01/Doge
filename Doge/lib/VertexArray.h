@@ -18,13 +18,6 @@ namespace doge
 		NOCOPYNOASSIGN(VertexArray);
 		VertexArray();
 		~VertexArray();
-		
-		/*
-		VertexArray(const VertexArray&) = delete;
-		VertexArray(const VertexArray&&) = delete;
-		VertexArray& operator=(const VertexArray&) = delete;
-		VertexArray& operator=(const VertexArray&&) = delete;
-		*/
 
 		void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& vbl);
 		void AddInstanceBuffer(const VertexBuffer& vb, DataType type, unsigned int index,

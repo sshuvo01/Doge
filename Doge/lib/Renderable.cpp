@@ -29,7 +29,7 @@ namespace doge
 		m_Material->GetShader()->Bind();
 	}
 
-	void Renderable::AddData(const RenderableData& rData, const std::vector<glm::mat4>& modelMats)
+	void Renderable::AddData(const RenderableData& rData, const std::vector<glm::mat4>& modelMats, const std::shared_ptr<Material>& mat)
 	{
 		spdlog::debug("Adding renderable data\n");
 		if (rData.buffer)
@@ -79,11 +79,15 @@ namespace doge
 		m_VAO = std::make_shared<VertexArray>();
 		m_VAO->AddBuffer(*m_VB, *m_VBL);
 
+		//SetMaterial(mat);
+		m_Material = mat;
+
 		// instance buffer
 		ASSERT(modelMats.size() > 0);
 		m_ModelMats = modelMats;
 		m_InstanceBuffer = std::make_shared<VertexBuffer>(m_ModelMats.data(), sizeof(glm::mat4) * m_ModelMats.size());
-		m_VAO->AddInstanceBuffer(*m_InstanceBuffer, DataType::MAT4, 3, 1);
+		uint iLoc = m_Material->GetShader()->GetShaderSpec().instanceMatLoc;
+		m_VAO->AddInstanceBuffer(*m_InstanceBuffer, DataType::MAT4, iLoc, 1);
 	}
 
 	

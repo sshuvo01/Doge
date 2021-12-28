@@ -28,9 +28,7 @@ namespace doge
 	inline bool GLLogCall(const char* function, const char* file, int line)
 	{
 		while (GLenum error = glGetError())
-		{
-			//std::cout << "[OPENGL ERROR] (" << error <<	") " << function << " " << file << ", " << line << std::endl;
-		
+		{		
 			spdlog::critical("OpenGL failed! info: 0x{0:x}, {1}, {2}", error, function, line);
 			return false; 
 		}

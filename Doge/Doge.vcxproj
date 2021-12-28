@@ -149,7 +149,6 @@
     <ClCompile Include="lib\Texture.cpp" />
     <ClCompile Include="lib\VertexArray.cpp" />
     <ClCompile Include="lib\VertexBuffer.cpp" />
-    <ClCompile Include="lib\Window.cpp" />
     <ClCompile Include="vendor\imgui\imgui.cpp" />
     <ClCompile Include="vendor\imgui\imgui_demo.cpp" />
     <ClCompile Include="vendor\imgui\imgui_draw.cpp" />
@@ -159,7 +158,9 @@
     <ClCompile Include="vendor\stb\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\frag\ScreenRect.frag" />
     <None Include="res\shaders\frag\Test.frag" />
+    <None Include="res\shaders\vert\ScreenRect.vert" />
     <None Include="res\shaders\vert\Test.vert" />
     <None Include="src\3.2.1.point_shadows.vert" />
     <None Include="src\3.2.1.point_shadows_depth.frag" />
@@ -183,7 +184,6 @@
     <ClInclude Include="lib\VertexArray.h" />
     <ClInclude Include="lib\VertexBuffer.h" />
     <ClInclude Include="lib\VertexBufferLayout.h" />
-    <ClInclude Include="lib\Window.h" />
     <ClInclude Include="vendor\imgui\imconfig.h" />
     <ClInclude Include="vendor\imgui\imgui.h" />
     <ClInclude Include="vendor\imgui\imgui_impl_glfw.h" />

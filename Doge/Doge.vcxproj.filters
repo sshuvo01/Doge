@@ -45,9 +45,6 @@
     <ClCompile Include="lib\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lib\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -89,6 +86,8 @@
     <None Include="src\3.2.1.point_shadows_depth.geom" />
     <None Include="res\shaders\frag\Test.frag" />
     <None Include="res\shaders\vert\Test.vert" />
+    <None Include="res\shaders\vert\ScreenRect.vert" />
+    <None Include="res\shaders\frag\ScreenRect.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendor\stb\stb_image.h">
@@ -419,9 +418,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\VertexBufferLayout.h">
