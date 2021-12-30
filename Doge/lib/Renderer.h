@@ -43,8 +43,8 @@ namespace doge
 		Shader*               m_ScreenRectShader = nullptr;
 		/*private functions*/
 		void LoadScreenRectData();
-		void RenderScreenRect() const {  }
-		void Validate() const {  }
+		void RenderRenderables() const;
+
 	};
 }
 

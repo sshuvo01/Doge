@@ -142,6 +142,8 @@
     <ClCompile Include="lib\IndexBuffer.cpp" />
     <ClCompile Include="lib\Material.cpp" />
     <ClCompile Include="lib\Renderable.cpp" />
+    <ClCompile Include="lib\Renderables\Boxes.cpp" />
+    <ClCompile Include="lib\Renderables\Plane.cpp" />
     <ClCompile Include="lib\Renderables\Triangles.cpp" />
     <ClCompile Include="lib\Renderer.cpp" />
     <ClCompile Include="lib\Scene.cpp" />
@@ -168,6 +170,7 @@
     <None Include="src\3.2.1.point_shadows_depth.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lib\Renderables\Boxes.h" />
     <ClInclude Include="lib\Camera.h" />
     <ClInclude Include="lib\Core.h" />
     <ClInclude Include="lib\Engine.h" />
@@ -176,6 +179,7 @@
     <ClInclude Include="lib\Lights.h" />
     <ClInclude Include="lib\Material.h" />
     <ClInclude Include="lib\Renderable.h" />
+    <ClInclude Include="lib\Renderables\Plane.h" />
     <ClInclude Include="lib\Renderables\Triangles.h" />
     <ClInclude Include="lib\Renderer.h" />
     <ClInclude Include="lib\Scene.h" />

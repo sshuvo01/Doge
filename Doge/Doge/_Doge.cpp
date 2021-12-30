@@ -10,6 +10,8 @@
 #include "Camera.h"
 #include "Renderer.h"
 #include "Renderables/Triangles.h"
+#include "Renderables/Boxes.h"
+#include "Renderables/Plane.h"
 #include "Engine.h"
 
 int main()
@@ -23,8 +25,11 @@ int main()
 	// renderer
 	doge::Renderer rnder;
 	doge::Triangles tri;
+	doge::Boxes box;
 	doge::Scene theScene;
-	theScene.renderablesList.push_back(&tri);
+	doge::Plane plane;
+	theScene.renderablesList.push_back(&box);
+	theScene.renderablesList.push_back(&plane);
 
 	//rnder.m_Renderables.push_back(&tri);
 	es.renderer = &rnder;

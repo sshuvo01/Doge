@@ -8,18 +8,18 @@ namespace doge
 	{
 		float vertices[] = 
 		{
-		   -0.5f, -0.5f, 0.0f, 1.0f, 0.0, 0.0f, 0.0f, 0.0f, // left  
-			0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // right 
-			0.0f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.5f, 1.0f  // top   
+		   -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // left  
+			0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // right 
+			0.0f,  0.5f, 0.0f, 0.5f, 1.0f  // top   
 		};
 
-		uint layout[] = { 3, 3, 2 };
+		uint layout[] = { 3, 2 };
 		RenderableData rData;
 		rData.buffer = vertices;
-		rData.bufferSize = sizeof(float) * (3 + 3 + 2) * 3;
+		rData.bufferSize = sizeof(float) * (3 + 2) * 3;
 		rData.indexCount = 3;
 		rData.layout = layout;
-		rData.layoutCount = 3;
+		rData.layoutCount = 2;
 		
 		std::vector<glm::mat4> modelMats;
 		glm::mat4 m{ 1.0f };

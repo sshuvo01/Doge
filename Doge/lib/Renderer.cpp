@@ -27,30 +27,22 @@ namespace doge
 
 	void Renderer::RenderFrame() const
 	{
-		for (size_t i = 0; i < m_Scene->renderablesList.size(); i++)
-		{
-			m_FBuffer1->BindFramebuffer();
-			
-			SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
-			ClearBuffer(true, true);
-			EnableDepthTest(true);
-			const Renderable* rable = m_Scene->renderablesList[i];
-			rable->BindData();
-			rable->GetMaterial()->SetMaterialUniforms();
-			rable->GetMaterial()->GetShader()->SetUniformMatrix4f("u_View", m_ViewMat);
-			rable->GetMaterial()->GetShader()->SetUniformMatrix4f("u_Projection", m_ProjectionMat);
-			
-			glDrawElementsInstanced(GL_TRIANGLES, rable->GetIndexCount(),
-				GL_UNSIGNED_INT, NULL, rable->GetModelMatsSize());
-			m_FBuffer1->UnbindFramebuffer();
-			//
-			m_ScreenRectVAO->Bind();
-			m_ScreenRectShader->Bind();
-			m_FBuffer1->BindTexture();
-			m_ScreenRectShader->SetUniformTexture("screenRectTexture", 0);
-			EnableDepthTest(false);
-			glDrawArrays(GL_TRIANGLES, 0, 6);
-		}
+		m_FBuffer1->BindFramebuffer();
+
+		SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
+		ClearBuffer(true, true);
+		EnableDepthTest(true);
+
+		RenderRenderables();
+
+		m_FBuffer1->UnbindFramebuffer();
+		//
+		m_ScreenRectVAO->Bind();
+		m_ScreenRectShader->Bind();
+		m_FBuffer1->BindTexture();
+		m_ScreenRectShader->SetUniformTexture("screenRectTexture", 0);
+		EnableDepthTest(false);
+		GLCALL(glDrawArrays(GL_TRIANGLES, 0, 6));
 	}
 
 	void Renderer::LoadScreenRectData()
@@ -74,6 +66,21 @@ namespace doge
 		m_ScreenRectVAO = new VertexArray;
 		m_ScreenRectVAO->AddBuffer(*m_ScreenRectVB, *m_ScreenRectVBL);
 		spdlog::debug("Loaded screen rect vertices");// no index buffer
+	}
+
+	void Renderer::RenderRenderables() const
+	{
+		for (size_t i = 0; i < m_Scene->renderablesList.size(); i++)
+		{
+			const Renderable* rable = m_Scene->renderablesList[i];
+			rable->BindData();
+			rable->GetMaterial()->SetMaterialUniforms();
+			rable->GetMaterial()->GetShader()->SetUniformMatrix4f("u_View", m_ViewMat);
+			rable->GetMaterial()->GetShader()->SetUniformMatrix4f("u_Projection", m_ProjectionMat);
+
+			GLCALL(glDrawElementsInstanced(GL_TRIANGLES, rable->GetIndexCount(),
+				GL_UNSIGNED_INT, NULL, rable->GetModelMatsSize()));
+		}
 	}
 
 	void Renderer::ClearBuffer(bool color, bool depth, bool stencil, bool accum) const

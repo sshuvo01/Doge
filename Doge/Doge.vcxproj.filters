@@ -78,6 +78,12 @@
     <ClCompile Include="lib\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\Renderables\Boxes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\Renderables\Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\3.2.1.point_shadows.vert" />
@@ -457,6 +463,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\Lights.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\Renderables\Boxes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\Renderables\Plane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

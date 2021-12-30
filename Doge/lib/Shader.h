@@ -15,7 +15,7 @@ namespace doge
 		std::string diffuseMapName = "u_DiffuseMap";
 		uint positionLoc = 0;
 		uint texCoordLoc = 1;
-		uint instanceMatLoc = 3;
+		uint instanceMatLoc = 2;
 	};
 
 	class Shader
