@@ -18,6 +18,7 @@ namespace doge
 		else
 		{
 			spdlog::error("STBI_LOAD FAILED. Failed to load {}", path);
+			ASSERT(false);
 		}
 
 		GLenum format;
@@ -57,7 +58,7 @@ namespace doge
 
 	Texture::~Texture()
 	{
-		//GLCALL(glDeleteTextures(1, &m_RendererID));
+		GLCALL(glDeleteTextures(1, &m_RendererID));
 	}
 
 	void Texture::Bind(unsigned int slot) const

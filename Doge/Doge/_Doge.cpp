@@ -14,6 +14,7 @@
 #include "Renderables/Plane.h"
 #include "Engine.h"
 
+
 int main()
 {
 	spdlog::set_level(spdlog::level::debug);
@@ -30,6 +31,12 @@ int main()
 	doge::Plane plane;
 	theScene.renderablesList.push_back(&box);
 	theScene.renderablesList.push_back(&plane);
+
+	// lights!
+	doge::DirectionalLight dLite1{ {1.0f, 2.0f, 0.0f}, {-1.0f, 1.0f, 0.0f}, {1.0f, 1.0f, 1.0f} };
+	doge::DirectionalLight dLite2{ {0.0f, 4.0f, 1.0f}, {0.5f, 0.0f, 0.0f}, {0.5f, 0.2f, 0.2f} };
+	theScene.lightsList.push_back(&dLite1);
+	//theScene.lightsList.push_back(&dLite2);
 
 	//rnder.m_Renderables.push_back(&tri);
 	es.renderer = &rnder;

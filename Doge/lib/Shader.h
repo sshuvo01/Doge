@@ -14,11 +14,12 @@ namespace doge
 		std::string vpMatName = "u_VP"; // view * projection
 		std::string diffuseMapName = "u_DiffuseMap";
 		uint positionLoc = 0;
-		uint texCoordLoc = 1;
-		uint instanceMatLoc = 2;
+		uint normalLoc = 1;
+		uint texCoordLoc = 2;
+		uint instanceMatLoc = 3;
 	};
 
-	class Shader
+	class Shader final
 	{
 	public:
 		NOCOPYNOASSIGN(Shader);
@@ -40,6 +41,8 @@ namespace doge
 		/*-----------*/
 		inline const ShaderSpec& GetShaderSpec() const { return m_ShaderSpec; }
 		inline void SetShaderSpec(const ShaderSpec& ss) { m_ShaderSpec = ss; }
+		//
+		static const std::string GetUniformName(const std::string& structVarName, uint index, const std::string& varName);
 	private:
 		uint m_RendererID;
 		ShaderSpec m_ShaderSpec;

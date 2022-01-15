@@ -84,6 +84,9 @@
     <ClCompile Include="lib\Renderables\Plane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\Lights.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\3.2.1.point_shadows.vert" />
@@ -94,6 +97,8 @@
     <None Include="res\shaders\vert\Test.vert" />
     <None Include="res\shaders\vert\ScreenRect.vert" />
     <None Include="res\shaders\frag\ScreenRect.frag" />
+    <None Include="res\shaders\frag\DepthMap.frag" />
+    <None Include="res\shaders\vert\DepthMap.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendor\stb\stb_image.h">

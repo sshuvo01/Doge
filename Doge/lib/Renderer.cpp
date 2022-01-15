@@ -12,7 +12,7 @@ namespace doge
 		LoadScreenRectData();
 		FramebufferSpec fSpec;
 		fSpec.isHDR = false;
-		m_FBuffer1 = new Framebuffer{fSpec};
+		m_FBuffer1 = new Framebuffer{ fSpec };
 		m_ScreenRectShader = new Shader{ "res/shaders/vert/ScreenRect.vert", "res/shaders/frag/ScreenRect.frag" };
 	}
 	
@@ -27,20 +27,41 @@ namespace doge
 
 	void Renderer::RenderFrame() const
 	{
-		m_FBuffer1->BindFramebuffer();
-
 		SetClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
-		ClearBuffer(true, true);
-		EnableDepthTest(true);
-
+		RenderDepthMaps();
+		m_FBuffer1->BindFramebuffer();
 		RenderRenderables();
 
-		m_FBuffer1->UnbindFramebuffer();
-		//
+		/*
+		DirectionalLight* dlight = dynamic_cast<DirectionalLight*>( m_Scene->lightsList[1] );
+		ASSERT(dlight);
+		
+		dlight->BindDepthMap();
+		EnableDepthTest(true);
+		ClearBuffer(false, true);
+
+		dlight->BindShader();
+		dlight->SetShaderUniforms();
+
+		GLCALL(glViewport(0, 0, dlight->GetMapWidth(), dlight->GetMapHeight()));
+		
+		for (size_t r = 0; r < m_Scene->renderablesList.size(); r++)
+		{
+			const Renderable* rable = m_Scene->renderablesList[r];
+			rable->BindData();
+			GLCALL(glDrawElementsInstanced(GL_TRIANGLES, rable->GetIndexCount(), GL_UNSIGNED_INT, NULL, rable->GetModelMatsSize()));
+		}
+		*/
+		
+		Framebuffer::BindDefault();
+
 		m_ScreenRectVAO->Bind();
 		m_ScreenRectShader->Bind();
-		m_FBuffer1->BindTexture();
+		//dlight->BindDepthTexture(0);
+		m_FBuffer1->BindTexture(0);
 		m_ScreenRectShader->SetUniformTexture("screenRectTexture", 0);
+
+		GLCALL(glViewport(0, 0, m_ScreenWidth, m_ScreenHeight));
 		EnableDepthTest(false);
 		GLCALL(glDrawArrays(GL_TRIANGLES, 0, 6));
 	}
@@ -70,16 +91,22 @@ namespace doge
 
 	void Renderer::RenderRenderables() const
 	{
+		EnableDepthTest(true);
+		ClearBuffer(true, true);
+		GLCALL(glViewport(0, 0, m_ScreenWidth, m_ScreenHeight));
 		for (size_t i = 0; i < m_Scene->renderablesList.size(); i++)
 		{
 			const Renderable* rable = m_Scene->renderablesList[i];
 			rable->BindData();
 			rable->GetMaterial()->SetMaterialUniforms();
-			rable->GetMaterial()->GetShader()->SetUniformMatrix4f("u_View", m_ViewMat);
-			rable->GetMaterial()->GetShader()->SetUniformMatrix4f("u_Projection", m_ProjectionMat);
+			auto rshader = rable->GetMaterial()->GetShader();
 
-			GLCALL(glDrawElementsInstanced(GL_TRIANGLES, rable->GetIndexCount(),
-				GL_UNSIGNED_INT, NULL, rable->GetModelMatsSize()));
+			rshader->SetUniformMatrix4f("u_View", m_ViewMat);
+			rshader->SetUniformMatrix4f("u_Projection", m_ProjectionMat);
+						
+			SetLightsUniforms(rshader);
+
+			GLCALL(glDrawElementsInstanced(GL_TRIANGLES, rable->GetIndexCount(), GL_UNSIGNED_INT, NULL, rable->GetModelMatsSize()));
 		}
 	}
 
@@ -148,6 +175,75 @@ namespace doge
 		}
 	}
 
+	void Renderer::RenderDepthMaps() const
+	{
+		EnableDepthTest(true);
+		for (size_t i = 0; i < m_Scene->lightsList.size(); i++)
+		{
+			// only for directional lights
+			if (m_Scene->lightsList[i]->GetType() != LightType::DIRECTIONAL)
+			{
+				continue;
+			}
 
+			DirectionalLight* alight = dynamic_cast<DirectionalLight*>(m_Scene->lightsList[i]);
+			ASSERT(alight);
+			
+			GLCALL(glViewport(0, 0, alight->GetMapWidth(), alight->GetMapHeight()));
+
+			alight->BindDepthMap(); // bound depth map
+			ClearBuffer(false, true);
+			alight->SetShaderUniforms();
+			//alight->BindShader();
+			
+			// render to the bound depth map
+			for (size_t r = 0; r < m_Scene->renderablesList.size(); r++)
+			{
+				const Renderable* rable = m_Scene->renderablesList[r];
+				rable->BindData();
+				GLCALL(glDrawElementsInstanced(GL_TRIANGLES, rable->GetIndexCount(), GL_UNSIGNED_INT, NULL, rable->GetModelMatsSize()));
+			}
+
+			
+		}
+
+
+	}
+
+	void Renderer::SetLightsUniforms(const std::shared_ptr<Shader>& shader) const
+	{
+		uint dirIndex = 0;
+		uint pointIndex = 0;
+		for (size_t i = 0; i < m_Scene->lightsList.size(); i++)
+		{
+			//shader->SetUniform1i("u_DirLightsCount", 1);
+			Light* alight = m_Scene->lightsList[i];
+			DirectionalLight* dlight = nullptr;
+			
+			switch (alight->GetType())
+			{
+			case LightType::DIRECTIONAL:
+				dlight = dynamic_cast<DirectionalLight*>(alight);
+				ASSERT(dlight);
+				shader->SetUniform3f(Shader::GetUniformName("u_DirLights", dirIndex, "direction"), dlight->GetDirection());
+				shader->SetUniform3f(Shader::GetUniformName("u_DirLights", dirIndex, "color"), dlight->GetColor());
+
+				dlight->BindDepthTexture(1 + static_cast<int>(dirIndex) ); // remember to change this later!
+				shader->SetUniformTexture(Shader::GetUniformName("u_DirLights", dirIndex, "depthMap"), 1 + static_cast<int>(dirIndex) );
+				shader->SetUniformMatrix4f(Shader::GetUniformName("u_DirLights", dirIndex, "lightSpaceMat"), dlight->GetLightSpaceMat());
+
+				
+				dirIndex++;
+				break;
+			case LightType::POINT:
+				pointIndex++;
+				break;
+			default:
+				break;
+			}
+		}
+
+		shader->SetUniform1i("u_DirLightsCount", static_cast<int>(dirIndex));
+	}
 
 }

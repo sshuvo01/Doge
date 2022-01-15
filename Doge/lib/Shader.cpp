@@ -4,6 +4,11 @@
 
 namespace doge
 {
+	const std::string Shader::GetUniformName(const std::string& structVarName, uint index, const std::string& varName)
+	{
+		return structVarName + "[" + std::to_string(index) + "]." + varName;
+	}
+
 	Shader::Shader(const std::string & vertexPath, const std::string & fragmentPath)
 	{
 		spdlog::debug("Constructing shader with {}, {}", vertexPath, fragmentPath);

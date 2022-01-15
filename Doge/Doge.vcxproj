@@ -140,6 +140,7 @@
     <ClCompile Include="lib\Engine.cpp" />
     <ClCompile Include="lib\Framebuffer.cpp" />
     <ClCompile Include="lib\IndexBuffer.cpp" />
+    <ClCompile Include="lib\Lights.cpp" />
     <ClCompile Include="lib\Material.cpp" />
     <ClCompile Include="lib\Renderable.cpp" />
     <ClCompile Include="lib\Renderables\Boxes.cpp" />
@@ -160,8 +161,10 @@
     <ClCompile Include="vendor\stb\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\shaders\frag\DepthMap.frag" />
     <None Include="res\shaders\frag\ScreenRect.frag" />
     <None Include="res\shaders\frag\Test.frag" />
+    <None Include="res\shaders\vert\DepthMap.vert" />
     <None Include="res\shaders\vert\ScreenRect.vert" />
     <None Include="res\shaders\vert\Test.vert" />
     <None Include="src\3.2.1.point_shadows.vert" />

@@ -5,7 +5,7 @@
 #include "spdlog/spdlog.h"
 #include <string>
 typedef unsigned int uint;
-#define ASSERT(x) if(!(x)) __debugbreak();
+#define ASSERT(x) if(!(x)) __debugbreak()
 #define GLCALL(x) doge::GLClearError();x;ASSERT(doge::GLLogCall(#x, __FILE__, __LINE__))
 #define NOCOPY(x) x(const x&)=delete;x(const x&&)=delete
 #define NOASSIGN(x) x& operator=(const x&)=delete;x& operator=(const x&&)=delete

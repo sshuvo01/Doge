@@ -7,29 +7,29 @@ namespace doge
 	Plane::Plane()
 	{
 		float vertices[] = {
-			-1.0f,  1.0f, 0.0f,  0.0f, 1.0f,
-			-1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
-			 1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
+			// positions            // normals         // texcoords
+			 25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
+			-25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
+			-25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
 
-			-1.0f,  1.0f, 0.0f,  0.0f, 1.0f,
-			 1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
-			 1.0f,  1.0f, 0.0f,  1.0f, 1.0f
+			 25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
+			-25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
+			 25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,  25.0f, 25.0f
 		};
-		unsigned int layout[] = { 3, 2 };
+		unsigned int layout[] = { 3, 3, 2 };
 		RenderableData rData;
 		rData.buffer = vertices;
-		rData.bufferSize = 6 * (3 + 2) * sizeof(float);
+		rData.bufferSize = 6 * (3 + 3 + 2) * sizeof(float);
 		rData.index = nullptr;
 		rData.indexCount = 6;
 		rData.layout = layout;
-		rData.layoutCount = 2;
+		rData.layoutCount = 3;
 		
 
 		std::vector<glm::mat4> modelMats;
 		glm::mat4 m{ 1.0f };
-		m = glm::scale(m, { 10.0f, 10.0f, 10.0f });
-		m = glm::rotate(m, glm::radians(90.0f), { 1.0f, 0.0f, 0.0f });
-		m = glm::translate(m, { 0.0f, 0.0f, 0.3f });
+		
+		m = glm::translate(m, { 0.0f, -3.2f, 0.f });
 		modelMats.push_back(m);
 		
 		auto material = std::make_shared<Material>();

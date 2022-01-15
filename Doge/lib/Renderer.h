@@ -8,7 +8,7 @@
 
 namespace doge
 {
-	class Renderer
+	class Renderer final
 	{
 	public:
 		NOCOPYNOASSIGN(Renderer);
@@ -44,7 +44,8 @@ namespace doge
 		/*private functions*/
 		void LoadScreenRectData();
 		void RenderRenderables() const;
-
+		void RenderDepthMaps() const;
+		void SetLightsUniforms(const std::shared_ptr<Shader>& shader) const;
 	};
 }
 

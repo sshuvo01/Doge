@@ -26,7 +26,7 @@ namespace doge
 		ASSERT(m_VAO);
 		m_VAO->Bind();
 		m_IB->Bind();
-		m_Material->GetShader()->Bind();
+		//m_Material->GetShader()->Bind();
 	}
 
 	void Renderable::AddData(const RenderableData& rData, const std::vector<glm::mat4>& modelMats, const std::shared_ptr<Material>& mat)
@@ -89,8 +89,6 @@ namespace doge
 		uint iLoc = m_Material->GetShader()->GetShaderSpec().instanceMatLoc;
 		m_VAO->AddInstanceBuffer(*m_InstanceBuffer, DataType::MAT4, iLoc, 1);
 	}
-
-	
 
 
 } // namespace doge

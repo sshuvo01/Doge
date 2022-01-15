@@ -6,7 +6,7 @@
 namespace doge
 {
 
-	class Texture 
+	class Texture final
 	{
 	public:
 		NOCOPYNOASSIGN(Texture);

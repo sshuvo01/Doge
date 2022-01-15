@@ -2,8 +2,6 @@
 
 namespace doge
 {
-	//int Engine::m_Point;
-
 	Engine::~Engine()
 	{
 	}
