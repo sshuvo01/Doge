@@ -25,7 +25,7 @@ namespace doge
 		inline const LightType& GetType() const { return m_Type; }
 		inline void TurnOnShadow() { m_CastShadow = true; }
 		inline void TurnOffShadow() { m_CastShadow = false; }
-		inline const glm::vec3& GetPosition() const { m_Position; }
+		inline const glm::vec3& GetPosition() const { return m_Position; }
 		virtual void SetShaderUniforms() const = 0;
 	private:
 

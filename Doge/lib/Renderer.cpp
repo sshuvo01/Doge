@@ -178,6 +178,7 @@ namespace doge
 	void Renderer::RenderDepthMaps() const
 	{
 		EnableDepthTest(true);
+
 		for (size_t i = 0; i < m_Scene->lightsList.size(); i++)
 		{
 			// only for directional lights
@@ -206,8 +207,6 @@ namespace doge
 
 			
 		}
-
-
 	}
 
 	void Renderer::SetLightsUniforms(const std::shared_ptr<Shader>& shader) const
@@ -227,11 +226,11 @@ namespace doge
 				ASSERT(dlight);
 				shader->SetUniform3f(Shader::GetUniformName("u_DirLights", dirIndex, "direction"), dlight->GetDirection());
 				shader->SetUniform3f(Shader::GetUniformName("u_DirLights", dirIndex, "color"), dlight->GetColor());
+				shader->SetUniform3f(Shader::GetUniformName("u_DirLights", dirIndex, "position"), dlight->GetPosition());
 
 				dlight->BindDepthTexture(1 + static_cast<int>(dirIndex) ); // remember to change this later!
 				shader->SetUniformTexture(Shader::GetUniformName("u_DirLights", dirIndex, "depthMap"), 1 + static_cast<int>(dirIndex) );
-				shader->SetUniformMatrix4f(Shader::GetUniformName("u_DirLights", dirIndex, "lightSpaceMat"), dlight->GetLightSpaceMat());
-
+				shader->SetUniformMatrix4f(Shader::GetUniformName("u_DirLights", dirIndex, "lightSpaceMat"), dlight->GetLightSpaceMat());				
 				
 				dirIndex++;
 				break;

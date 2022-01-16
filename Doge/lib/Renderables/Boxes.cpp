@@ -1,6 +1,9 @@
 #include "Boxes.h"
 #include "VertexBufferLayout.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <vector>
+#include <algorithm>
+#include <iostream>
 
 namespace doge
 {
@@ -50,10 +53,13 @@ namespace doge
 			-1.0f,  1.0f, -1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f, // top-left
 			-1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f  // bottom-left
 		};
+		size_t arrayCount = sizeof(vertices) / sizeof(float);
+		std::vector<float> verticesVector(arrayCount);
+		std::copy(vertices, vertices + arrayCount, verticesVector.begin());
 
 		RenderableData rData;
 		uint layout[] = { 3, 3, 2 };
-		rData.buffer = vertices;
+		rData.buffer = &verticesVector[0];
 		rData.bufferSize = 36 * (3 + 3 + 2) * sizeof(float);
 		rData.index = nullptr;
 		rData.indexCount = 36;
@@ -62,8 +68,11 @@ namespace doge
 
 		std::vector<glm::mat4> modelMats;
 		glm::mat4 m{ 1.0f };
-		
+		m = glm::rotate(m, glm::radians(45.0f), { 0.0f, 1.0f, 1.0f });
 		modelMats.push_back(m);
+
+		//std::cout << verticesVector.size() << "..." << std::endl;
+		//std::cin.get();
 		/*
 		
 		m = glm::translate(m, { 0.0f, 0.0f, -6.0f });

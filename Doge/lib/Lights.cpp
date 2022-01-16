@@ -43,7 +43,7 @@ namespace doge
 
 	void DirectionalLight::SetupLightSpaceMat()
 	{
-		float nearPlane = 1.0f, farPlane = 12.5f;
+		float nearPlane = 1.0f, farPlane = 52.5f;
 		glm::mat4 lightProjection = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, nearPlane, farPlane);
 		glm::mat4 lightView = glm::lookAt(m_Position, m_LookAtPos, glm::vec3(0.0f, 1.0f, 0.0f));
 

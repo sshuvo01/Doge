@@ -3,10 +3,13 @@
 out vec4 FragColor;
 in vec2 texCoord;
 in vec3 v_Normal;
+in vec3 v_FragPosition;
+
 in vec4 v_LightSpaceFragPos[MAX_LIGHT];
 
 struct DirLight
 {
+	vec3       position; // has a position for now!
 	vec3       color;
 	vec3       direction; // points away from the light like this: o ---->
 	bool       isActive;
@@ -38,21 +41,12 @@ struct TestStruct
 
 uniform TestStruct uni;
 
-vec3 GetDiffuseColor(vec3 texColor)
-{
-	vec3 totalColor = vec3(0.0f, 0.0f, 0.0f);
-	for(int i = 0; i < u_DirLightsCount; i++)
-	{
-		float diff = max( dot(-u_DirLights[i].direction, v_Normal), 0.0f);
-		totalColor += diff * texColor * u_DirLights[i].color;
-	}
-	//vec4 r = texture(u_DirLights[0].depthMap, vec2(0.0, 0.0));
-
-	return totalColor;
-}
 
 float GetDepthMapShadow(int dirLitInd, float bias)
 {
+	float minBias = 0.006;
+	float biasMult = 0.05;
+
 	// perform perspective divide
 	vec3 projCoords = v_LightSpaceFragPos[dirLitInd].xyz / v_LightSpaceFragPos[dirLitInd].w;
 	// transform to [0, 1] range
@@ -82,18 +76,52 @@ float GetDepthMapShadow(int dirLitInd, float bias)
 	return shadow;
 }
 
+vec3 GetDiffuseColor(vec3 texColor)
+{
+	vec3 totalColor = vec3(0.0f, 0.0f, 0.0f);
+	for(int i = 0; i < u_DirLightsCount; i++)
+	{
+		vec3 lightDir = normalize(u_DirLights[i].position - v_FragPosition); 
+		float diff = max(dot(lightDir, v_Normal), 0.0f); // lambertian 
+		totalColor += diff * texColor * u_DirLights[i].color;
+	}
+
+	return totalColor;
+}
+
+float GetDirLightsShadow()
+{
+	float shadow = 0.0;
+	float minBias = 0.006;
+	float biasMult = 0.05;
+	for(int i = 0; i < u_DirLightsCount; i++)
+	{
+		vec3 lightDir = normalize(u_DirLights[i].position - v_FragPosition);
+		float bias = max(biasMult * (1.0 - dot(lightDir, v_Normal)), minBias);
+		
+		shadow += GetDepthMapShadow(i, bias);
+	}
+
+	return clamp(shadow, 0.0, 1.0);
+}
+
 void main()
 {
 	vec4 t = texture(u_DiffuseMap, texCoord);
-	float amb = 0.15f;
+	float amb = 0.2f;
 	vec3 diffuse = GetDiffuseColor(t.rgb);
 	vec3 ambient = amb * t.rgb;
 	//FragColor = vec4( u_DirLights[0].color, 1.0f);
 	
-	//float bias = max(0.05 * (1.0 - dot(-u_DirLights[0].direction, v_Normal)), 0.005);
-	float bias = 0.1;
-	float shadow = GetDepthMapShadow(0, bias);
 
-	FragColor = vec4( diffuse * (1.0 - shadow) + ambient, 1.0f);
-	//FragColor = vec4( shadow, shadow, shadow, 1.0f);
+	//float bias = max(0.05 * (1.0 - dot(-u_DirLights[0].direction, v_Normal)), 0.005);
+	
+	float shadow = GetDirLightsShadow();
+	
+	//shadow += GetDepthMapShadow(0, bias);
+	//shadow += GetDepthMapShadow(1, bias);
+	
+	FragColor = vec4( diffuse * (1.0 - shadow) + ambient, 1.0 );
+	//FragColor = vec4(shadow, shadow, shadow, 1.0);
+	//FragColor = vec4(diffuse , 1.0f);
 }
