@@ -5,3 +5,5 @@ Doge renderer using OpenGL
 
   <H1>Doge renderer!</H1>
 </div>
+
+* This project uses C++11, Visual Studio 2017.
