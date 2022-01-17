@@ -213,6 +213,9 @@ namespace doge
 	{
 		uint dirIndex = 0;
 		uint pointIndex = 0;
+		uint matMapCount = shader->GetShaderSpec().materialMapCount;
+		uint textureIndex;
+
 		for (size_t i = 0; i < m_Scene->lightsList.size(); i++)
 		{
 			//shader->SetUniform1i("u_DirLightsCount", 1);
@@ -224,12 +227,13 @@ namespace doge
 			case LightType::DIRECTIONAL:
 				dlight = dynamic_cast<DirectionalLight*>(alight);
 				ASSERT(dlight);
-				shader->SetUniform3f(Shader::GetUniformName("u_DirLights", dirIndex, "direction"), dlight->GetDirection());
+				//shader->SetUniform3f(Shader::GetUniformName("u_DirLights", dirIndex, "direction"), dlight->GetDirection());
 				shader->SetUniform3f(Shader::GetUniformName("u_DirLights", dirIndex, "color"), dlight->GetColor());
 				shader->SetUniform3f(Shader::GetUniformName("u_DirLights", dirIndex, "position"), dlight->GetPosition());
 
-				dlight->BindDepthTexture(1 + static_cast<int>(dirIndex) ); // remember to change this later!
-				shader->SetUniformTexture(Shader::GetUniformName("u_DirLights", dirIndex, "depthMap"), 1 + static_cast<int>(dirIndex) );
+				textureIndex = static_cast<uint>(matMapCount) + static_cast<uint>(dirIndex);
+				dlight->BindDepthTexture(textureIndex); // remember to change this later!
+				shader->SetUniformTexture(Shader::GetUniformName("u_DirLights", dirIndex, "depthMap"), textureIndex);
 				shader->SetUniformMatrix4f(Shader::GetUniformName("u_DirLights", dirIndex, "lightSpaceMat"), dlight->GetLightSpaceMat());				
 				
 				dirIndex++;

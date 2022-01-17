@@ -33,7 +33,7 @@ int main()
 	theScene.renderablesList.push_back(&plane);
 
 	// lights!
-	doge::DirectionalLight dLite1{ {1.0f, 6.0f, 1.0f}, {-1.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f} };
+	doge::DirectionalLight dLite1{ {1.0f, 6.0f, 1.0f}, {-1.0f, 0.0f, 0.0f}, {0.6f, 0.6f, 0.6f} };
 	doge::DirectionalLight dLite2{ {-2.0f, 4.0f, -1.0f}, {0.5f, 0.0f, 0.0f}, {0.5f, 0.0f, 0.2f} };
 	theScene.lightsList.push_back(&dLite1);
 	theScene.lightsList.push_back(&dLite2);

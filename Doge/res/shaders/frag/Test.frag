@@ -1,11 +1,21 @@
 #version 330 core
-#define MAX_LIGHT 16
+#define MAX_LIGHT 12
 out vec4 FragColor;
+/*
 in vec2 texCoord;
 in vec3 v_Normal;
 in vec3 v_FragPosition;
+*/
+in VS2FS
+{
+	vec2 texCoord;
+	vec3 normal;
+	vec3 fragPosition;
+	vec4 lightSpaceFragPos[MAX_LIGHT];
+	vec3 dirLightPosition_ts[MAX_LIGHT]; // ts = tangent space, ws = world space
+	vec3 fragPosition_ts;
+}v_IN;
 
-in vec4 v_LightSpaceFragPos[MAX_LIGHT];
 
 struct DirLight
 {
@@ -26,21 +36,25 @@ struct PointLight
 	bool isActive;
 };
 
+struct Material 
+{
+    sampler2D diffuseMap;
+	sampler2D normalMap;
+}; 
+
 uniform PointLight u_PointLights[MAX_LIGHT];
 uniform DirLight u_DirLights[MAX_LIGHT];
 uniform int u_PointLightsCount;
 uniform int u_DirLightsCount;
+uniform Material u_Material;
 
-uniform vec3 color;
-uniform sampler2D u_DiffuseMap;
+//uniform sampler2D u_DiffuseMap;
 
-struct TestStruct
+vec3 GetNMNormal()
 {
-	vec3 color;
-};
-
-uniform TestStruct uni;
-
+	vec3 normal = texture(u_Material.normalMap, v_IN.texCoord).rgb;
+	return normalize(normal * 2.0 - 1.0);
+}
 
 float GetDepthMapShadow(int dirLitInd, float bias)
 {
@@ -48,7 +62,7 @@ float GetDepthMapShadow(int dirLitInd, float bias)
 	float biasMult = 0.05;
 
 	// perform perspective divide
-	vec3 projCoords = v_LightSpaceFragPos[dirLitInd].xyz / v_LightSpaceFragPos[dirLitInd].w;
+	vec3 projCoords = v_IN.lightSpaceFragPos[dirLitInd].xyz / v_IN.lightSpaceFragPos[dirLitInd].w;
 	// transform to [0, 1] range
 	projCoords = projCoords * 0.5 + 0.5;
 
@@ -78,11 +92,20 @@ float GetDepthMapShadow(int dirLitInd, float bias)
 
 vec3 GetDiffuseColor(vec3 texColor)
 {
+	vec3 nmNormal = GetNMNormal();
+
 	vec3 totalColor = vec3(0.0f, 0.0f, 0.0f);
 	for(int i = 0; i < u_DirLightsCount; i++)
 	{
-		vec3 lightDir = normalize(u_DirLights[i].position - v_FragPosition); 
-		float diff = max(dot(lightDir, v_Normal), 0.0f); // lambertian 
+		//vec3 lightDir = normalize(u_DirLights[i].position - v_FragPosition); 
+		vec3 lightDir = normalize(u_DirLights[i].position - v_IN.fragPosition); 
+
+		vec3 lightDir_ts = normalize(v_IN.dirLightPosition_ts[i] - v_IN.fragPosition_ts);
+
+		//float diff = max(dot(lightDir, v_Normal), 0.0f); // lambertian 
+		//float diff = max(dot(lightDir, v_IN.normal), 0.0f); // lambertian 
+		float diff = max(dot(lightDir_ts, nmNormal), 0.0f); // lambertian 
+
 		totalColor += diff * texColor * u_DirLights[i].color;
 	}
 
@@ -96,8 +119,11 @@ float GetDirLightsShadow()
 	float biasMult = 0.05;
 	for(int i = 0; i < u_DirLightsCount; i++)
 	{
-		vec3 lightDir = normalize(u_DirLights[i].position - v_FragPosition);
-		float bias = max(biasMult * (1.0 - dot(lightDir, v_Normal)), minBias);
+		//vec3 lightDir = normalize(u_DirLights[i].position - v_FragPosition);
+		vec3 lightDir = normalize(u_DirLights[i].position - v_IN.fragPosition);
+
+		//float bias = max(biasMult * (1.0 - dot(lightDir, v_Normal)), minBias);
+		float bias = max(biasMult * (1.0 - dot(lightDir, v_IN.normal)), minBias);
 		
 		shadow += GetDepthMapShadow(i, bias);
 	}
@@ -107,7 +133,10 @@ float GetDirLightsShadow()
 
 void main()
 {
-	vec4 t = texture(u_DiffuseMap, texCoord);
+	//vec4 t = texture(u_DiffuseMap, texCoord);
+	vec4 t = texture(u_Material.diffuseMap, v_IN.texCoord);
+	//vec4 tnormal = texture(u_Material.normalMap, v_IN.texCoord);
+
 	float amb = 0.2f;
 	vec3 diffuse = GetDiffuseColor(t.rgb);
 	vec3 ambient = amb * t.rgb;

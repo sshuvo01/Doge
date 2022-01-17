@@ -23,9 +23,10 @@ namespace doge
 		inline const std::shared_ptr<Shader>& GetShader() const { return m_Shader; }
 		inline void SetShader(const std::shared_ptr<Shader>& shader) { m_Shader = shader; }
 		inline void SetDiffuseMap(const std::shared_ptr<Texture>& diffMap) { m_DiffuseMap = diffMap; }
+		inline void SetNormalMap(const std::shared_ptr<Texture>& normalMap) { m_NormalMap = normalMap; }
 	private:
 		std::shared_ptr<Shader>     m_Shader;
-		std::shared_ptr<Texture>    m_DiffuseMap;
+		std::shared_ptr<Texture>    m_DiffuseMap = nullptr, m_NormalMap = nullptr;
 		/*---------------*/
 		void Validate() const;
 	};
