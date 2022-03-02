@@ -142,8 +142,10 @@
     <ClCompile Include="lib\IndexBuffer.cpp" />
     <ClCompile Include="lib\Lights.cpp" />
     <ClCompile Include="lib\Material.cpp" />
+    <ClCompile Include="lib\ModelLoader.cpp" />
     <ClCompile Include="lib\Renderable.cpp" />
     <ClCompile Include="lib\Renderables\Boxes.cpp" />
+    <ClCompile Include="lib\Renderables\Models.cpp" />
     <ClCompile Include="lib\Renderables\Plane.cpp" />
     <ClCompile Include="lib\Renderables\Triangles.cpp" />
     <ClCompile Include="lib\Renderer.cpp" />
@@ -164,15 +166,18 @@
     <None Include="res\shaders\frag\DepthMap.frag" />
     <None Include="res\shaders\frag\ScreenRect.frag" />
     <None Include="res\shaders\frag\Test.frag" />
+    <None Include="res\shaders\frag\Test2.frag" />
     <None Include="res\shaders\vert\DepthMap.vert" />
     <None Include="res\shaders\vert\ScreenRect.vert" />
     <None Include="res\shaders\vert\Test.vert" />
+    <None Include="res\shaders\vert\Test2.vert" />
     <None Include="src\3.2.1.point_shadows.vert" />
     <None Include="src\3.2.1.point_shadows_depth.frag" />
     <None Include="src\3.2.1.point_shadows_depth.geom" />
     <None Include="src\3.2.1.point_shadows_depth.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lib\ModelLoader.h" />
     <ClInclude Include="lib\Renderables\Boxes.h" />
     <ClInclude Include="lib\Camera.h" />
     <ClInclude Include="lib\Core.h" />
@@ -182,6 +187,7 @@
     <ClInclude Include="lib\Lights.h" />
     <ClInclude Include="lib\Material.h" />
     <ClInclude Include="lib\Renderable.h" />
+    <ClInclude Include="lib\Renderables\Models.h" />
     <ClInclude Include="lib\Renderables\Plane.h" />
     <ClInclude Include="lib\Renderables\Triangles.h" />
     <ClInclude Include="lib\Renderer.h" />

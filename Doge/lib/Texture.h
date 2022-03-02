@@ -2,9 +2,25 @@
 #define _DOGE_TEXTURE_H_
 #include "Core.h"
 #include "stb/stb_image.h"
+#include <memory>
 
 namespace doge
 {
+	class Texture;
+
+	enum class MaterialMapType
+	{
+		DIFFUSE = 0x0,
+		SPECULAR,
+		NORMAL,
+		UNKNOWN,
+	};
+
+	struct MaterialMap
+	{
+		std::shared_ptr<Texture> mapTexture = nullptr;
+		MaterialMapType type = MaterialMapType::UNKNOWN;
+	};
 
 	class Texture final
 	{

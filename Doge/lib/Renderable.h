@@ -2,6 +2,7 @@
 #define _DOGE_RENDERABLE_H_
 #include "Core.h"
 #include <vector>
+#include <memory>
 #include <glm/mat4x4.hpp>
 #include "Material.h"
 #include "VertexArray.h"
@@ -31,9 +32,9 @@ namespace doge
 		Renderable();
 		Renderable(const RenderableType& type);
 		virtual ~Renderable();
-		virtual void Init() = 0;
-		virtual void Update() = 0;
-		virtual void CleanUp() = 0;
+		virtual void Init() { }
+		virtual void Update() { } 
+		virtual void CleanUp() { }
 		//------
 
 		void BindData() const;
@@ -41,7 +42,6 @@ namespace doge
 		//inline void SetMaterial(const std::shared_ptr<Material>& material) { m_Material = material; }
 		inline uint GetModelMatsSize() const { return m_ModelMats.size(); }
 		inline uint GetIndexCount() const { return m_IB->GetCount(); }
-	protected:
 		void AddData(const RenderableData& rData, const std::vector<glm::mat4>& modelMats, const std::shared_ptr<Material>& mat);
 	private:
 		std::vector<glm::mat4>              m_ModelMats; // for multiple instances

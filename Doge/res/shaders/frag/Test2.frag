@@ -1,11 +1,7 @@
 #version 330 core
 #define MAX_LIGHT 12
 out vec4 FragColor;
-/*
-in vec2 texCoord;
-in vec3 v_Normal;
-in vec3 v_FragPosition;
-*/
+
 in VS2FS
 {
 	vec2 texCoord;
@@ -133,14 +129,16 @@ float GetDirLightsShadow()
 
 void main()
 {
-	vec4 t = texture(u_Material.diffuseMap, v_IN.texCoord);
-	//vec4 t2 = texture(u_Material.normalMap, v_IN.texCoord);
-	//t = vec4(0.8, 0.0, 0.0, 1.0);
-	//FragColor = vec4(t.rgb + t2.rgb, 1.0);
-	//return;
-	float amb = 0.1f;
+	//vec4 t = texture(u_DiffuseMap, texCoord);
+	vec4 t = texture(u_Material.normalMap, v_IN.texCoord);
+	vec4 tn = texture(u_Material.diffuseMap, v_IN.texCoord);
+	//vec4 tnormal = texture(u_Material.normalMap, v_IN.texCoord);
+	FragColor = vec4( tn.rgb, 1.0);
+	return;
+
+	float amb = 0.2f;
 	vec3 diffuse = GetDiffuseColor(t.rgb);
-	vec3 ambient = amb * (t.rgb);
+	vec3 ambient = amb * t.rgb;
 	//FragColor = vec4( u_DirLights[0].color, 1.0f);
 	
 
@@ -148,6 +146,10 @@ void main()
 	
 	float shadow = GetDirLightsShadow();
 	
-	FragColor = vec4( (1.0 - shadow) * diffuse + ambient, 1.0);
-	//FragColor = vec4( diffuse + ambient, 1.0);
+	//shadow += GetDepthMapShadow(0, bias);
+	//shadow += GetDepthMapShadow(1, bias);
+	
+	FragColor = vec4( diffuse * (1.0 - shadow) + ambient, 1.0 );
+	//FragColor = vec4(shadow, shadow, shadow, 1.0);
+	//FragColor = vec4(diffuse , 1.0f);
 }

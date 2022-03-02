@@ -87,6 +87,12 @@
     <ClCompile Include="lib\Lights.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\ModelLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\Renderables\Models.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\3.2.1.point_shadows.vert" />
@@ -99,6 +105,8 @@
     <None Include="res\shaders\frag\ScreenRect.frag" />
     <None Include="res\shaders\frag\DepthMap.frag" />
     <None Include="res\shaders\vert\DepthMap.vert" />
+    <None Include="res\shaders\vert\Test2.vert" />
+    <None Include="res\shaders\frag\Test2.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendor\stb\stb_image.h">
@@ -474,6 +482,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\Renderables\Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\ModelLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\Renderables\Models.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -52,8 +52,6 @@ namespace doge
 		GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 		
 		spdlog::debug("Loaded {}. Width {}, Height {}, Channels {}", m_FilePath, m_Width, m_Height, m_BPP);
-		//GLCALL(glBindTexture(GL_TEXTURE_2D, 0));
-		//Bind(0);
 	}
 
 	Texture::~Texture()
