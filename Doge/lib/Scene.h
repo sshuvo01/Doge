@@ -4,6 +4,7 @@
 #include "Renderable.h"
 #include "Lights.h"
 #include <vector>
+#include "Cubemap.h"
 
 namespace doge
 {
@@ -14,8 +15,9 @@ namespace doge
 		Scene();
 		~Scene();
 
-		std::vector<Renderable*>   renderablesList;
+		std::vector<Renderable*>   renderablesList ;
 		std::vector<Light*>        lightsList;
+		Cubemap*                   theSkybox = nullptr;
 		inline void lol() {  }
 	private:
 	};

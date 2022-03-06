@@ -93,6 +93,9 @@
     <ClCompile Include="lib\Renderables\Models.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\Cubemap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\3.2.1.point_shadows.vert" />
@@ -107,6 +110,8 @@
     <None Include="res\shaders\vert\DepthMap.vert" />
     <None Include="res\shaders\vert\Test2.vert" />
     <None Include="res\shaders\frag\Test2.frag" />
+    <None Include="res\shaders\vert\Skybox.vert" />
+    <None Include="res\shaders\frag\Skybox.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendor\stb\stb_image.h">
@@ -488,6 +493,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\Renderables\Models.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\Cubemap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

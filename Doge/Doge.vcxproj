@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="Doge\_Doge.cpp" />
     <ClCompile Include="lib\Camera.cpp" />
+    <ClCompile Include="lib\Cubemap.cpp" />
     <ClCompile Include="lib\Engine.cpp" />
     <ClCompile Include="lib\Framebuffer.cpp" />
     <ClCompile Include="lib\IndexBuffer.cpp" />
@@ -165,10 +166,12 @@
   <ItemGroup>
     <None Include="res\shaders\frag\DepthMap.frag" />
     <None Include="res\shaders\frag\ScreenRect.frag" />
+    <None Include="res\shaders\frag\Skybox.frag" />
     <None Include="res\shaders\frag\Test.frag" />
     <None Include="res\shaders\frag\Test2.frag" />
     <None Include="res\shaders\vert\DepthMap.vert" />
     <None Include="res\shaders\vert\ScreenRect.vert" />
+    <None Include="res\shaders\vert\Skybox.vert" />
     <None Include="res\shaders\vert\Test.vert" />
     <None Include="res\shaders\vert\Test2.vert" />
     <None Include="src\3.2.1.point_shadows.vert" />
@@ -177,6 +180,7 @@
     <None Include="src\3.2.1.point_shadows_depth.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lib\Cubemap.h" />
     <ClInclude Include="lib\ModelLoader.h" />
     <ClInclude Include="lib\Renderables\Boxes.h" />
     <ClInclude Include="lib\Camera.h" />

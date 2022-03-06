@@ -36,15 +36,18 @@ namespace doge
 		glm::vec3             m_CameraPosition;
 
 		uint                  m_ScreenWidth, m_ScreenHeight;
-		VertexBuffer*         m_ScreenRectVB = nullptr;
-		VertexBufferLayout*   m_ScreenRectVBL = nullptr;
-		VertexArray*          m_ScreenRectVAO = nullptr;
+		VertexBuffer          *m_ScreenRectVB = nullptr, *m_SkyboxVB = nullptr;
+		VertexBufferLayout    *m_ScreenRectVBL = nullptr, *m_SkyboxVBL = nullptr;
+		VertexArray           *m_ScreenRectVAO = nullptr, *m_SkyboxVAO = nullptr;
 		Framebuffer*          m_FBuffer1 = nullptr;
-		Shader*               m_ScreenRectShader = nullptr;
+		Shader                *m_ScreenRectShader = nullptr, *m_SkyboxShader = nullptr;
 		/*private functions*/
 		void LoadScreenRectData();
+		void LoadSkyboxData();
 		void RenderRenderables() const;
 		void RenderDepthMaps() const;
+		void RenderScreenTexture() const;
+		void RenderSkybox() const;
 		void SetLightsUniforms(const std::shared_ptr<Shader>& shader) const;
 	};
 }

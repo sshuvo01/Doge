@@ -6,10 +6,8 @@ namespace doge
 	Renderer::Renderer()
 		: m_ScreenWidth(640 * 2), m_ScreenHeight(480 * 2)
 	{
-		//m_Scene->lightsList.size();
-		
-		//m_ProjectionMat = 
 		LoadScreenRectData();
+		LoadSkyboxData();
 		FramebufferSpec fSpec;
 		fSpec.isHDR = false;
 		m_FBuffer1 = new Framebuffer{ fSpec };
@@ -23,6 +21,10 @@ namespace doge
 		DELETE(m_ScreenRectVBL);
 		DELETE(m_FBuffer1);
 		DELETE(m_ScreenRectShader);
+		DELETE(m_SkyboxVB);
+		DELETE(m_SkyboxVBL);
+		DELETE(m_SkyboxVAO);
+		DELETE(m_SkyboxShader);
 	}
 
 	void Renderer::RenderFrame() const
@@ -31,39 +33,10 @@ namespace doge
 		RenderDepthMaps();
 		m_FBuffer1->BindFramebuffer();
 		RenderRenderables();
+		RenderSkybox();
 
-		/*
-		DirectionalLight* dlight = dynamic_cast<DirectionalLight*>( m_Scene->lightsList[1] );
-		ASSERT(dlight);
-		
-		dlight->BindDepthMap();
-		EnableDepthTest(true);
-		ClearBuffer(false, true);
-
-		dlight->BindShader();
-		dlight->SetShaderUniforms();
-
-		GLCALL(glViewport(0, 0, dlight->GetMapWidth(), dlight->GetMapHeight()));
-		
-		for (size_t r = 0; r < m_Scene->renderablesList.size(); r++)
-		{
-			const Renderable* rable = m_Scene->renderablesList[r];
-			rable->BindData();
-			GLCALL(glDrawElementsInstanced(GL_TRIANGLES, rable->GetIndexCount(), GL_UNSIGNED_INT, NULL, rable->GetModelMatsSize()));
-		}
-		*/
-		
 		Framebuffer::BindDefault();
-
-		m_ScreenRectVAO->Bind();
-		m_ScreenRectShader->Bind();
-		//dlight->BindDepthTexture(0);
-		m_FBuffer1->BindTexture(0);
-		m_ScreenRectShader->SetUniformTexture("screenRectTexture", 0);
-
-		GLCALL(glViewport(0, 0, m_ScreenWidth, m_ScreenHeight));
-		EnableDepthTest(false);
-		GLCALL(glDrawArrays(GL_TRIANGLES, 0, 6));
+		RenderScreenTexture();
 	}
 
 	void Renderer::LoadScreenRectData()
@@ -89,9 +62,67 @@ namespace doge
 		spdlog::debug("Loaded screen rect vertices");// no index buffer
 	}
 
+	void Renderer::LoadSkyboxData()
+	{
+		float skyboxVertices[] = {
+			// positions          
+			-1.0f,  1.0f, -1.0f,
+			-1.0f, -1.0f, -1.0f,
+			 1.0f, -1.0f, -1.0f,
+			 1.0f, -1.0f, -1.0f,
+			 1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+
+			-1.0f, -1.0f,  1.0f,
+			-1.0f, -1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f, -1.0f,
+			-1.0f,  1.0f,  1.0f,
+			-1.0f, -1.0f,  1.0f,
+
+			 1.0f, -1.0f, -1.0f,
+			 1.0f, -1.0f,  1.0f,
+			 1.0f,  1.0f,  1.0f,
+			 1.0f,  1.0f,  1.0f,
+			 1.0f,  1.0f, -1.0f,
+			 1.0f, -1.0f, -1.0f,
+
+			-1.0f, -1.0f,  1.0f,
+			-1.0f,  1.0f,  1.0f,
+			 1.0f,  1.0f,  1.0f,
+			 1.0f,  1.0f,  1.0f,
+			 1.0f, -1.0f,  1.0f,
+			-1.0f, -1.0f,  1.0f,
+
+			-1.0f,  1.0f, -1.0f,
+			 1.0f,  1.0f, -1.0f,
+			 1.0f,  1.0f,  1.0f,
+			 1.0f,  1.0f,  1.0f,
+			-1.0f,  1.0f,  1.0f,
+			-1.0f,  1.0f, -1.0f,
+
+			-1.0f, -1.0f, -1.0f,
+			-1.0f, -1.0f,  1.0f,
+			 1.0f, -1.0f, -1.0f,
+			 1.0f, -1.0f, -1.0f,
+			-1.0f, -1.0f,  1.0f,
+			 1.0f, -1.0f,  1.0f
+		};
+		
+		m_SkyboxVB = new VertexBuffer{ skyboxVertices, 36 * 3 * sizeof(float) };
+		m_SkyboxVBL = new VertexBufferLayout;
+		m_SkyboxVAO = new VertexArray;
+		m_SkyboxVBL->Push(3);
+		m_SkyboxVAO->AddBuffer(*m_SkyboxVB, *m_SkyboxVBL);
+		m_SkyboxShader = new Shader{ "res/shaders/vert/Skybox.vert", "res/shaders/frag/Skybox.frag" };
+		spdlog::debug("Loaded skybox");
+	}
+
 	void Renderer::RenderRenderables() const
 	{
 		EnableDepthTest(true);
+		EnableDepthWriting(true);
+		glDepthFunc(GL_LESS);
 		ClearBuffer(true, true);
 		GLCALL(glViewport(0, 0, m_ScreenWidth, m_ScreenHeight));
 		for (size_t i = 0; i < m_Scene->renderablesList.size(); i++)
@@ -178,6 +209,8 @@ namespace doge
 	void Renderer::RenderDepthMaps() const
 	{
 		EnableDepthTest(true);
+		EnableDepthWriting(true);
+		glDepthFunc(GL_LESS);
 
 		for (size_t i = 0; i < m_Scene->lightsList.size(); i++)
 		{
@@ -204,9 +237,34 @@ namespace doge
 				rable->BindData();
 				GLCALL(glDrawElementsInstanced(GL_TRIANGLES, rable->GetIndexCount(), GL_UNSIGNED_INT, NULL, rable->GetModelMatsSize()));
 			}
-
-			
 		}
+	}
+
+	void Renderer::RenderScreenTexture() const
+	{
+		EnableDepthTest(false);
+		m_ScreenRectVAO->Bind();
+		m_ScreenRectShader->Bind();
+
+		m_FBuffer1->BindTexture(0);
+		m_ScreenRectShader->SetUniformTexture("screenRectTexture", 0);
+
+		GLCALL(glViewport(0, 0, m_ScreenWidth, m_ScreenHeight));
+		GLCALL(glDrawArrays(GL_TRIANGLES, 0, 6));
+	}
+
+	void Renderer::RenderSkybox() const
+	{
+		EnableDepthWriting(false);
+		glDepthFunc(GL_LEQUAL);
+		ASSERT(m_Scene->theSkybox);
+		m_Scene->theSkybox->Bind(0);
+		m_SkyboxShader->SetUniformTexture("u_SkyboxTexture", 0);
+		glm::mat4 skyViewMat = glm::mat4(glm::mat3(m_ViewMat));
+		m_SkyboxShader->SetUniformMatrix4f("u_View", skyViewMat);
+		m_SkyboxShader->SetUniformMatrix4f("u_Projection", m_ProjectionMat);
+		m_SkyboxVAO->Bind();
+		GLCALL(glDrawArrays(GL_TRIANGLES, 0, 36));
 	}
 
 	void Renderer::SetLightsUniforms(const std::shared_ptr<Shader>& shader) const

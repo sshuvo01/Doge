@@ -45,6 +45,30 @@ int main()
 	doge::Boxes box;
 	doge::Scene theScene;
 	doge::Plane plane;
+
+	/*
+	std::string skyboxfaces[6] = 
+	{
+		"right.jpg",
+		"left.jpg",
+		"bottom.jpg",
+		"top.jpg",
+		"front.jpg",
+		"back.jpg"
+	};
+	*/
+
+	std::string skyboxfaces[6] =
+	{
+		"posx.jpg",
+		"negx.jpg",
+		"negy.jpg",
+		"posy.jpg",
+		"posz.jpg",
+		"negz.jpg",
+	};
+
+	doge::Cubemap skybox{ "res/Cubemaps/storforsen3", skyboxfaces };
 	std::vector<doge::Renderable*> rendList;
 	rendList.push_back(&plane);
 	rendList.push_back(&box);
@@ -60,11 +84,12 @@ int main()
 	doge::DirectionalLight dLite2{ {-2.0f, 4.0f, -1.0f}, {0.5f, 0.0f, 0.0f}, {0.5f, 1.0f, 0.5f} };
 	theScene.lightsList.push_back(&dLite1);
 	theScene.lightsList.push_back(&dLite2);
-
+	theScene.theSkybox = &skybox;
 	//rnder.m_Renderables.push_back(&tri);
 	es.renderer = &rnder;
 	doge::Engine::GetInstance().SetRenderer(&rnder);
 	doge::Engine::GetInstance().SetScene(&theScene);
+	
 	doge::Engine::GetInstance().Run();
 
 	std::cin.get();
