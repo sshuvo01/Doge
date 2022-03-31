@@ -31,6 +31,7 @@ uniform PointLight u_PointLights[MAX_LIGHT];
 uniform DirLight u_DirLights[MAX_LIGHT];
 uniform int u_PointLightsCount;
 uniform int u_DirLightsCount;
+uniform vec3 u_ViewPosition;
 
 out VS2FS
 {
@@ -40,6 +41,7 @@ out VS2FS
 	vec4 lightSpaceFragPos[MAX_LIGHT];
 	vec3 dirLightPosition_ts[MAX_LIGHT]; // ts = tangent space, ws = world space
 	vec3 fragPosition_ts;
+	vec3 viewPosition_ts;
 }v_OUT;
 
 uniform mat4 u_Model, u_View, u_Projection, u_MVP; 
@@ -76,6 +78,7 @@ void main()
 	v_OUT.fragPosition = vec3(aModelInstance * vec4(aPos, 1.0)); // fragPosition is in WS after multiplication
 	v_OUT.fragPosition_ts = invTBNMat * v_OUT.fragPosition; 
 	v_OUT.texCoord = aTexCoord;
+	v_OUT.viewPosition_ts = invTBNMat * u_ViewPosition;
 
     gl_Position = u_Projection * u_View * aModelInstance * vec4(aPos, 1.0);
 }

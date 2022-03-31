@@ -62,6 +62,40 @@ namespace doge
 				spdlog::debug("Name of the normal map: {}", normalMap->GetFilePath());
 				material->SetNormalMap(normalMap);
 			}
+			auto roughnessMap = ExtractTexture(i, MaterialMapType::ROUGHNESS);
+			if (!roughnessMap)
+			{
+				spdlog::error("Roughness map not found!");
+				ASSERT(false);
+			}
+			else
+			{
+				spdlog::debug("Name of the roughness map: {}", roughnessMap->GetFilePath());
+				material->SetRoughnessMap(roughnessMap);
+			}
+			auto metallicMap = ExtractTexture(i, MaterialMapType::METALLIC);
+			if (!metallicMap)
+			{
+				spdlog::error("Metallic map not found!");
+				ASSERT(false);
+			}
+			else
+			{
+				spdlog::debug("Name of the metallic map: {}", metallicMap->GetFilePath());
+				material->SetMetallicMap(metallicMap);
+			}
+			auto aoMap = ExtractTexture(i, MaterialMapType::AMBIENTOCCLUSION);
+			if (!aoMap)
+			{
+				spdlog::error("Ambient occlusion map not found!");
+				ASSERT(false);
+			}
+			else
+			{
+				spdlog::debug("Name of the ambient occlusion map: {}", aoMap->GetFilePath());
+				material->SetAmbientOcclusionMap(aoMap);
+			}
+
 
 			//material->SetDiffuseMap(theMesh.m_MaterialMaps[0].mapTexture);
 			material->SetShader(theShader);

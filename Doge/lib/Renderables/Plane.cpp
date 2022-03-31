@@ -49,6 +49,10 @@ namespace doge
 		auto material = std::make_shared<Material>();
 		material->SetDiffuseMap(std::make_shared<Texture>("res/textures/wall.jpg", true));
 		material->SetNormalMap(std::make_shared<Texture>("res/textures/brickwall_normal.jpg", true));
+		material->SetRoughnessMap(std::make_shared<Texture>("res/textures/barren-ground-rock-bl/barren-ground-rock_roughness.png", true));
+		material->SetMetallicMap(std::make_shared<Texture>("res/textures/barren-ground-rock-bl/barren-ground-rock_metallic.png", true));
+		material->SetAmbientOcclusionMap(std::make_shared<Texture>("res/textures/barren-ground-rock-bl/barren-ground-rock_ao.png", true));
+		
 		material->SetShader(std::make_shared<Shader>("res/shaders/vert/Test.vert", "res/shaders/frag/Test.frag"));
 
 		AddData(rData, modelMats, material);

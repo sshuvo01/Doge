@@ -58,6 +58,7 @@ namespace doge
 		std::vector<uint> indices;
 		std::vector<MaterialMap> materialMaps;
 
+
 		for (uint i = 0; i < mesh->mNumVertices; i++)
 		{
 			Vertex vertex;
@@ -113,10 +114,28 @@ namespace doge
 		}
 		// material maps
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+		
+		
+		//auto counttt = material->GetTextureCount(aiTextureType_AMBIENT);
+		// aiTextureType_SHININESS = obj map_Ns = metallic map 
+		// aiTextureType_SPECULAR = obj map_Ks = roughness map 
+		// aiTextureType_AMBIENT = obj map_Ka = ambient occlusion map 
+		// aiTextureType_HEIGHT = obj map_Bump = normal map
+		// aiTextureType_DIFFUSE = obj map_Kd = albedo map
+		//std::cout << counttt << std::endl;
+		//std::cin.get();
+
 		auto diffuseMaps = LoadMaterialMaps(material, MaterialMapType::DIFFUSE);
 		auto normalMaps = LoadMaterialMaps(material, MaterialMapType::NORMAL);
+		auto roughnessMaps = LoadMaterialMaps(material, MaterialMapType::ROUGHNESS);
+		auto metallicMaps = LoadMaterialMaps(material, MaterialMapType::METALLIC);
+		auto aoMaps = LoadMaterialMaps(material, MaterialMapType::AMBIENTOCCLUSION);
+
 		materialMaps.insert(materialMaps.end(), diffuseMaps.begin(), diffuseMaps.end());
 		materialMaps.insert(materialMaps.end(), normalMaps.begin(), normalMaps.end());
+		materialMaps.insert(materialMaps.end(), roughnessMaps.begin(), roughnessMaps.end());
+		materialMaps.insert(materialMaps.end(), metallicMaps.begin(), metallicMaps.end());
+		materialMaps.insert(materialMaps.end(), aoMaps.begin(), aoMaps.end());
 
 		return { vertices, indices, materialMaps };
 	}
@@ -136,7 +155,10 @@ namespace doge
 			mat->GetTexture(aiType, i, &mapname);
 			
 			MaterialMap theMap;
-			std::string lolo = m_Directoryname + "/" + std::string{ mapname.C_Str() };
+			std::string textureName = m_Directoryname + "/" + std::string{ mapname.C_Str() };
+			theMap.mapTexture = std::make_shared<Texture>(textureName, false, false);
+			
+			/*
 			if (type == MaterialMapType::DIFFUSE)
 			{
 				theMap.mapTexture = std::make_shared<Texture>(lolo, false, false);
@@ -145,6 +167,19 @@ namespace doge
 			{
 				theMap.mapTexture = std::make_shared<Texture>(lolo, false, false);
 			}
+			else if (type == MaterialMapType::ROUGHNESS)
+			{
+				theMap.mapTexture = std::make_shared<Texture>(lolo, false, false);
+			}
+			else if(type == MaterialMapType::METALLIC)
+			{
+
+			}
+			else if (type == MaterialMapType::AMBIENTOCCLUSION)
+			{
+
+			}
+			*/
 
 			theMap.type = type;
 			maps.push_back(theMap);
@@ -166,6 +201,18 @@ namespace doge
 		case MaterialMapType::NORMAL:
 			typeName = "NORMAL";
 			return aiTextureType::aiTextureType_HEIGHT; // weird!
+			break;
+		case MaterialMapType::ROUGHNESS:
+			typeName = "ROUGHNESS";
+			return aiTextureType::aiTextureType_SPECULAR; // uwu
+			break;
+		case MaterialMapType::METALLIC:
+			typeName = "METALLIC";
+			return aiTextureType::aiTextureType_SHININESS;
+			break;
+		case MaterialMapType::AMBIENTOCCLUSION:
+			typeName = "AMBIENTOCCLUSION";
+			return aiTextureType::aiTextureType_AMBIENT;
 			break;
 		default:
 			typeName = "UNKNOWN";

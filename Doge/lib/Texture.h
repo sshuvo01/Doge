@@ -11,8 +11,10 @@ namespace doge
 	enum class MaterialMapType
 	{
 		DIFFUSE = 0x0,
-		SPECULAR,
 		NORMAL,
+		ROUGHNESS,
+		METALLIC,
+		AMBIENTOCCLUSION,
 		UNKNOWN,
 	};
 

@@ -85,6 +85,7 @@ int main()
 	theScene.lightsList.push_back(&dLite1);
 	theScene.lightsList.push_back(&dLite2);
 	theScene.theSkybox = &skybox;
+
 	//rnder.m_Renderables.push_back(&tri);
 	es.renderer = &rnder;
 	doge::Engine::GetInstance().SetRenderer(&rnder);

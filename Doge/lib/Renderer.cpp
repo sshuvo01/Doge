@@ -134,6 +134,7 @@ namespace doge
 
 			rshader->SetUniformMatrix4f("u_View", m_ViewMat);
 			rshader->SetUniformMatrix4f("u_Projection", m_ProjectionMat);
+			rshader->SetUniform3f("u_ViewPosition", m_CameraPosition);
 						
 			SetLightsUniforms(rshader);
 

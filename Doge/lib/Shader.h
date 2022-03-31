@@ -17,7 +17,7 @@ namespace doge
 		uint normalLoc = 1;
 		uint texCoordLoc = 2;
 		uint instanceMatLoc = 5;
-		uint materialMapCount = 2; // might change later
+		uint materialMapCount = 5; // might change later
 	};
 
 	class Shader final

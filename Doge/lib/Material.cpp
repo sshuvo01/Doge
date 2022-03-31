@@ -20,14 +20,15 @@ namespace doge
 		
 		m_NormalMap->Bind(1);
 		m_Shader->SetUniformTexture("u_Material.normalMap", 1);
-		/*
-		m_DiffuseMap->Bind(0);
-		m_Shader->SetUniformTexture("u_Material.diffuseMap", 0);
-		m_NormalMap->Bind(1);
-		m_Shader->SetUniformTexture("u_Material.normalMap", 1);
-		*/
+		
+		m_RoughnessMap->Bind(2);
+		m_Shader->SetUniformTexture("u_Material.roughnessMap", 2);
 
-		//m_Shader->SetUniform3f("uni.color", { 1.0f, 1.0f, 0.0f });
+		m_MetallicMap->Bind(3);
+		m_Shader->SetUniformTexture("u_Material.metallicMap", 3);
+
+		m_AOMap->Bind(4);
+		m_Shader->SetUniformTexture("u_Material.aoMap", 4);
 	}
 
 	void Material::Validate() const
@@ -45,6 +46,18 @@ namespace doge
 		if (!m_NormalMap)
 		{
 			spdlog::error("Normal map not found in the material!");
+		}
+		if (!m_RoughnessMap)
+		{
+			spdlog::error("Roughness map not found in the material!");
+		}
+		if (!m_MetallicMap)
+		{
+			spdlog::error("Metallic map not found in the material!");
+		}
+		if (!m_AOMap)
+		{
+			spdlog::error("AO map not found in the material!");
 		}
 	}
 }
