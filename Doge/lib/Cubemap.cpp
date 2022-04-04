@@ -2,7 +2,7 @@
 
 namespace doge
 {
-	Cubemap::Cubemap(const std::string & dir, const std::string * face)
+	Cubemap::Cubemap(const std::string & dir, const std::string * face, bool flipTexture)
 		: m_Directory(dir)
 	{
 		spdlog::debug("Loading cubemap in {}", dir);
@@ -26,6 +26,7 @@ namespace doge
 		{
 			tempName = dir + '/' + face[i];
 			m_FacesName[i] = face[i];
+			stbi_set_flip_vertically_on_load(flipTexture);
 			m_LocalBuffer[i] = stbi_load(tempName.c_str(), &m_Width[i], &m_Height[i], &m_BPP[i], 0);
 
 			if (m_LocalBuffer[i])
@@ -51,7 +52,11 @@ namespace doge
 
 	Cubemap::~Cubemap()
 	{
-		// TODO
+		//DELETEARRAY(m_LocalBuffer);
+		for (int i = 0; i < 6; i++)
+		{
+			DELETE(m_LocalBuffer[i]);
+		}
 	}
 
 	void Cubemap::Bind(unsigned int slot) const

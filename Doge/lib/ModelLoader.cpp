@@ -15,8 +15,8 @@ namespace doge
 	}
 
 	// model class
-	Model::Model(const std::string & filename)
-		: m_Filename(filename)
+	Model::Model(const std::string & filename, bool flipTexture)
+		: m_Filename(filename), m_FlipTexture{flipTexture}
 	{
 		spdlog::debug("Loading model {}", m_Filename);
 
@@ -156,7 +156,7 @@ namespace doge
 			
 			MaterialMap theMap;
 			std::string textureName = m_Directoryname + "/" + std::string{ mapname.C_Str() };
-			theMap.mapTexture = std::make_shared<Texture>(textureName, false, false);
+			theMap.mapTexture = std::make_shared<Texture>(textureName, m_FlipTexture, false);
 			
 			/*
 			if (type == MaterialMapType::DIFFUSE)

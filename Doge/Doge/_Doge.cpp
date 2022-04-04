@@ -62,8 +62,8 @@ int main()
 	{
 		"posx.jpg",
 		"negx.jpg",
-		"negy.jpg",
 		"posy.jpg",
+		"negy.jpg",
 		"posz.jpg",
 		"negz.jpg",
 	};

@@ -7,8 +7,8 @@ namespace doge
 	Models::Models(std::vector<Renderable*>& renderablesList)
 	{
 		spdlog::debug("Constructing models");
-		// pushe all the meshes to the list as renderables
-		m_TheModel = new Model{ "res/model/fox/low-poly-fox-by-pixelmannen.obj" };
+		// pushes all the meshes to the list as renderables
+		m_TheModel = new Model{ "res/model/fox/low-poly-fox-by-pixelmannen.obj", true };
 		size_t nOfMesh = m_TheModel->GetMeshList().size();
 		m_Meshes = new Renderable[nOfMesh];
 		

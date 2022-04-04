@@ -8,7 +8,8 @@ namespace doge
 		: m_RendererID(0), m_FilePath(path), m_LocalBuffer(nullptr),
 		  m_Width(0), m_Height(0), m_BPP(0)
 	{
-		if(flipUV) stbi_set_flip_vertically_on_load(1);
+		//if(flipUV) stbi_set_flip_vertically_on_load(1);
+		stbi_set_flip_vertically_on_load(flipUV);
 		m_LocalBuffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 0);
 
 		if (m_LocalBuffer)
@@ -57,6 +58,7 @@ namespace doge
 	Texture::~Texture()
 	{
 		GLCALL(glDeleteTextures(1, &m_RendererID));
+		DELETE(m_LocalBuffer);
 	}
 
 	void Texture::Bind(unsigned int slot) const

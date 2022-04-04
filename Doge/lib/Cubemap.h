@@ -10,7 +10,7 @@ namespace doge
 	public:
 		NOCOPYNOASSIGN(Cubemap);
 		Cubemap() = delete;
-		Cubemap(const std::string& dir, const std::string* face);
+		Cubemap(const std::string& dir, const std::string* face, bool flipTexture = false);
 		~Cubemap();
 
 		void Bind(unsigned int slot = 0) const;

@@ -31,6 +31,7 @@ namespace doge
 		std::vector<uint>          m_Indices;
 		std::vector<MaterialMap>   m_MaterialMaps;
 	private:
+		
 	};
 	// model class, model = many meshes
 	class Model final
@@ -38,7 +39,7 @@ namespace doge
 	public:
 		NOCOPYNOASSIGN(Model);
 		Model() = delete;
-		Model(const std::string& filename);
+		Model(const std::string& filename, bool flipTexture = false);
 		~Model();
 
 		inline const std::vector<Mesh>& GetMeshList() const { return m_MeshList; }
@@ -47,6 +48,7 @@ namespace doge
 	private:
 		std::string              m_Filename, m_Directoryname;
 		std::vector<Mesh>        m_MeshList;
+		bool                     m_FlipTexture;
 		/*private functions*/
 		void ProcessNode(const aiNode* node, const aiScene* scene);
 		Mesh ProcessMesh(const aiMesh* mesh, const aiScene* scene);
